@@ -1,0 +1,10 @@
+declare module "intersection-observer";
+declare module "react-gridstack";
+declare module "*.module.css";
+declare module "pdf-extraction";
+declare module "react-split-pane@next"
+declare module "@react-pdf-viewer/core"
+declare module "@hapi/boom"
+declare module "mongoose"
+declare module "fast-deep-equal"
+declare module "flatted"

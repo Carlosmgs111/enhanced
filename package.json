@@ -1,14 +1,32 @@
 {
-  "name": "",
+  "name": "enhanced",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "prod": "astro build & astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.11.1"
+    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/vercel": "^8.2.2",
+    "@chroma-core/default-embed": "^0.1.8",
+    "@huggingface/inference": "^4.5.3",
+    "@langchain/community": "^0.3.49",
+    "@langchain/core": "^0.3.65",
+    "@langchain/groq": "^0.2.3",
+    "astro": "^5.11.1",
+    "chromadb": "^3.0.9",
+    "langchain": "^0.3.30",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/node": "^9.3.0",
+    "@astrojs/react": "^4.3.0"
   }
 }

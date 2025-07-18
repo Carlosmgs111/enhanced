@@ -1,0 +1,56 @@
+<section class="w-[600px] h-[300px] flex flex-col">
+  <article
+    id="response"
+    class="w-full h-full border border-black overflow-scroll"
+  >
+  </article>
+  <form class="flex flex-col gap-2">
+    <input class="border border-black" type="text" value="hola" /><button
+      >Enviar</button
+    >
+  </form>
+</section>
+
+<script>
+  const form: any = document.querySelector("form");
+  const response: any = document.getElementById("response");
+
+  const receiveMessage = () => {
+    let text = "";
+    const eventSource = new EventSource(`/api/ai`);
+    eventSource.onmessage = (event) => {
+      if (event.data === "[DONE]") {
+        eventSource.close();
+        return;
+      }
+
+      const chunk = JSON.parse(event.data);
+      // appendToChat(chunk.text); // Actualizar UI en tiempo real
+      text += chunk.data;
+      response.textContent = text;
+    };
+    eventSource.onopen = () => {
+      console.log("Conexión establecida");
+    };
+    eventSource.onerror = () => {
+      console.log("Error en la transmisión");
+      eventSource.close();
+    };
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const input = e.target[0];
+    const message = input.value;
+    input.value = "";
+    await fetch(`/api/ai`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message }),
+    });
+    receiveMessage();
+  };
+  form.addEventListener("submit", handleSubmit);
+</script>

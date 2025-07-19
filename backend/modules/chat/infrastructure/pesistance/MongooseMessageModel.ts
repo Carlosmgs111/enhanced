@@ -8,7 +8,7 @@ export interface Message extends Document {
   sender: `user:${string}` | `agent:${string}`;
 }
 
-const messageSchema = new Schema<Message>({
+const messageSchema = new Schema({
   id: { type: String, unique: true, required: true },
   chatId: { type: String, required: true },
   content: { type: String, required: true },
@@ -17,4 +17,4 @@ const messageSchema = new Schema<Message>({
 });
 
 
-export const MessageModel = mongoose.models.Message || model<Message>("Message", messageSchema);
+export const MessageModel = mongoose.models.Message || model("Message", messageSchema);

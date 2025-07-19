@@ -1,6 +1,4 @@
-import {
-  connectToDatabase,
-} from "../shared/infrastructure/config/databases";
+import { connectToDatabase } from "../shared/infrastructure/config/databases";
 connectToDatabase();
 import { ChatService } from "./domain/services/ChatService";
 import { ChatUseCases } from "./application/ChatUseCases";
@@ -12,10 +10,11 @@ import { ChromaMessageVectorStore } from "./infrastructure/pesistance/ChromaMess
 export const chatService = new ChatService(
   new MongooseChatRepository(),
   new MongooseMessageRepository(),
-  new HFEmbeddingGenerator(
-    "sentence-transformers/distiluse-base-multilingual-cased-v2"
-  ),
+  new HFEmbeddingGenerator("Qwen/Qwen3-Embedding-8B"),
   new ChromaMessageVectorStore()
 );
 
-export const chatUseCases = new ChatUseCases(chatService);
+export const chatUseCases = new ChatUseCases(
+  chatService,
+  new ChromaMessageVectorStore()
+);

@@ -21,4 +21,5 @@ export interface MessageEmbedding {
     id: string;
     vector: number[];
     model: string;
+    document: string;
 }

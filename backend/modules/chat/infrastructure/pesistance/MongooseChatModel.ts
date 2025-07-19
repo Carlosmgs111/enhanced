@@ -11,7 +11,7 @@ export interface Chat extends Document {
   updatedAt: Date;
 }
 
-const chatSchema = new Schema<Chat>({
+const chatSchema = new Schema({
   id: { type: String, unique: true, required: true },
   name: { type: String, required: true },
   description: { type: String, required: true },
@@ -23,4 +23,4 @@ const chatSchema = new Schema<Chat>({
 });
 
 export const ChatModel =
-  mongoose.models.Chat || model<Chat>("Chat", chatSchema);
+  mongoose.models.Chat || model("Chat", chatSchema);

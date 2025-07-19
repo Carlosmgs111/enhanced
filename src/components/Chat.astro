@@ -5,52 +5,69 @@
   >
   </article>
   <form class="flex flex-col gap-2">
-    <input class="border border-black" type="text" value="hola" /><button
-      >Enviar</button
-    >
+    <input
+      class="border border-black"
+      type="text"
+      value="Hola, como estas?"
+    /><button>Enviar</button>
   </form>
 </section>
 
 <script>
+  import { v4 as uuid } from "uuid";
   const form: any = document.querySelector("form");
   const response: any = document.getElementById("response");
-
   const receiveMessage = () => {
-    let text = "";
-    const eventSource = new EventSource(`/api/ai`);
-    eventSource.onmessage = (event) => {
-      if (event.data === "[DONE]") {
-        eventSource.close();
-        return;
-      }
+    try {
+      let text = "";
+      const eventSource = new EventSource(`/api/chat/4b2dd990-284a-4efe-afd5-ffa9ac65430c`);
+      eventSource.onmessage = (event) => {
+        if (event.data === "[DONE]") {
+          eventSource.close();
+          return;
+        }
 
-      const chunk = JSON.parse(event.data);
-      // appendToChat(chunk.text); // Actualizar UI en tiempo real
-      text += chunk.data;
-      response.textContent = text;
-    };
-    eventSource.onopen = () => {
-      console.log("Conexión establecida");
-    };
-    eventSource.onerror = () => {
-      console.log("Error en la transmisión");
-      eventSource.close();
-    };
+        const chunk = JSON.parse(event.data);
+        // appendToChat(chunk.text); // Actualizar UI en tiempo real
+        text += chunk.data;
+        response.textContent = text;
+      };
+      eventSource.onopen = () => {
+        console.log("Conexión establecida");
+      };
+      eventSource.onerror = (error) => {
+        console.log("Error en la transmisión", error);
+        eventSource.close();
+      };
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const input = e.target[0];
-    const message = input.value;
+    const message = {
+      content: input.value,
+      id: uuid(),
+      timestamp: new Date(),
+      sender: "user:" + uuid(),
+    };
     input.value = "";
-    await fetch(`/api/ai`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message }),
-    });
-    receiveMessage();
+
+    const response = await fetch(
+      `/api/chat/4b2dd990-284a-4efe-afd5-ffa9ac65430c`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message }),
+      }
+    );
+    if (response.ok) {
+      receiveMessage();
+    }
   };
   form.addEventListener("submit", handleSubmit);
 </script>

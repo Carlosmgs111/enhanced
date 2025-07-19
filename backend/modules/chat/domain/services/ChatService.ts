@@ -72,7 +72,7 @@ export class ChatService implements ChatServiceContract {
   appendMessageToChat = async (
     chatId: string,
     message: Omit<MessageEntity, "chatId">
-  ): Promise<void> => {
+  ): Promise<{ message: Message; embedding: MessageEmbedding }> => {
     const chat = await this.chatRepository.getChatById(chatId);
     if (!chat) {
       throw new Error("Chat not found");
@@ -90,10 +90,14 @@ export class ChatService implements ChatServiceContract {
     const newEmbedding = new MessageEmbedding(
       message.id,
       embedding,
-      this.embeddingsGenerator.getModel()
+      this.embeddingsGenerator.getModel(),
+      message.content
     );
+    // const searchResults = await this.vectorStore.search(newEmbedding);
+    // console.log({ searchResults });
     await this.vectorStore.save(newEmbedding);
     await this.messageRepository.createMessage(newMessage);
+    return {message: newMessage, embedding: newEmbedding};
   };
 
   updateChat = async (chat: Chat) => {

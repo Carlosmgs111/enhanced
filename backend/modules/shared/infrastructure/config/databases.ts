@@ -6,6 +6,8 @@ import { ChromaClient } from "chromadb";
 export const chromaClient = new ChromaClient({
   host: "127.0.0.1",
   port: 8000,
+  // database: "message_vector",
+
 });
 
 export const connectToDatabase = async () => {

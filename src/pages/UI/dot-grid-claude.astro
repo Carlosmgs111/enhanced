@@ -1,0 +1,796 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+<Layout>
+<div class="container">
+    <header class="header">
+      <h1>DotGrid</h1>
+      <p>Fuente Original Inspirada en Matriz de Puntos</p>
+      <p>
+        Diseñada especialmente para pantallas digitales y señalización moderna
+      </p>
+    </header>
+
+    <div class="demo-section">
+      <h2>🎯 Generador Interactivo</h2>
+      <input
+        type="text"
+        class="text-input"
+        id="textInput"
+        placeholder="Escribe tu texto aquí..."
+        value="DOTGRID"
+      />
+
+      <div class="controls">
+        <div class="control-group">
+          <label>Tamaño:</label>
+          <input type="range" id="sizeSlider" min="6" max="20" value="12" />
+          <span id="sizeValue">12px</span>
+        </div>
+
+        <div class="control-group">
+          <label>Color:</label>
+          <select id="colorSelect">
+            <option value="#00ff88">Verde Matrix</option>
+            <option value="#ff0066">Rosa Neón</option>
+            <option value="#0099ff">Azul Cibernético</option>
+            <option value="#ffaa00">Ámbar Retro</option>
+            <option value="#ff3333">Rojo Alerta</option>
+            <option value="#9966ff">Púrpura</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label>Brillo:</label>
+          <input type="range" id="glowSlider" min="0" max="20" value="10" />
+        </div>
+      </div>
+
+      <div class="preview" id="preview">
+        <div class="dot-display" id="dotDisplay"></div>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>📝 Ejemplos de Uso</h2>
+      <div class="examples">
+        <div class="example-item">
+          <div class="example-label">Títulos y Logotipos</div>
+          <div id="example1"></div>
+        </div>
+        <div class="example-item">
+          <div class="example-label">Señalización Digital</div>
+          <div id="example2"></div>
+        </div>
+        <div class="example-item">
+          <div class="example-label">Interfaces Retro</div>
+          <div id="example3"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>✨ Características</h3>
+        <ul>
+          <li>Diseño completamente original</li>
+          <li>Múltiples colores y efectos</li>
+          <li>Tamaño ajustable dinámicamente</li>
+          <li>Efecto de brillo LED personalizable</li>
+          <li>Optimizada para pantallas modernas</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>🎨 Usos Recomendados</h3>
+        <ul>
+          <li>Logotipos tecnológicos</li>
+          <li>Señalización digital</li>
+          <li>Interfaces retro-futuristas</li>
+          <li>Pantallas de información</li>
+          <li>Diseño de videojuegos</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>⚡ Ventajas</h3>
+        <ul>
+          <li>100% CSS, sin imágenes</li>
+          <li>Escalable y responsive</li>
+          <li>Animaciones suaves</li>
+          <li>Fácil personalización</li>
+          <li>Compatible con todos los navegadores</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="download-section">
+      <h2>📦 Implementar DotGrid</h2>
+      <p>
+        Copia el código CSS y JavaScript para usar esta fuente en tus
+        proyectos
+      </p>
+      <button class="btn" onclick="copyCode()">📋 Copiar Código</button>
+      <button class="btn" onclick="downloadHTML()">📄 Descargar HTML</button>
+    </div>
+  </div>
+
+<script>
+    // Patrones de matriz 5x7 para caracteres
+    const dotPatterns: Record<string, number[][]> = {
+      A: [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+      ],
+      B: [
+        [1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 0],
+      ],
+      C: [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      D: [
+        [1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 0],
+      ],
+      E: [
+        [1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1],
+      ],
+      F: [
+        [1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+      ],
+      G: [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0],
+        [1, 0, 1, 1, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      H: [
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+      ],
+      I: [
+        [1, 1, 1, 1, 1],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [1, 1, 1, 1, 1],
+      ],
+      J: [
+        [0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      K: [
+        [1, 0, 0, 1, 0],
+        [1, 0, 1, 0, 0],
+        [1, 1, 0, 0, 0],
+        [1, 1, 0, 0, 0],
+        [1, 0, 1, 0, 0],
+        [1, 0, 0, 1, 0],
+        [1, 0, 0, 0, 1],
+      ],
+      L: [
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1],
+      ],
+      M: [
+        [1, 0, 0, 0, 1],
+        [1, 1, 0, 1, 1],
+        [1, 0, 1, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+      ],
+      N: [
+        [1, 0, 0, 0, 1],
+        [1, 1, 0, 0, 1],
+        [1, 0, 1, 0, 1],
+        [1, 0, 0, 1, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+      ],
+      O: [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      P: [
+        [1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+      ],
+      Q: [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1],
+        [1, 0, 0, 1, 1],
+        [0, 1, 1, 1, 1],
+      ],
+      R: [
+        [1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 0],
+        [1, 0, 1, 0, 0],
+        [1, 0, 0, 1, 0],
+        [1, 0, 0, 0, 1],
+      ],
+      S: [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      T: [
+        [1, 1, 1, 1, 1],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+      ],
+      U: [
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      V: [
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 0, 1, 0],
+        [0, 1, 0, 1, 0],
+        [0, 0, 1, 0, 0],
+      ],
+      W: [
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1],
+        [1, 1, 0, 1, 1],
+        [1, 0, 0, 0, 1],
+      ],
+      X: [
+        [1, 0, 0, 0, 1],
+        [0, 1, 0, 1, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 1, 0, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+      ],
+      Y: [
+        [1, 0, 0, 0, 1],
+        [0, 1, 0, 1, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+      ],
+      Z: [
+        [1, 1, 1, 1, 1],
+        [0, 0, 0, 1, 0],
+        [0, 0, 1, 0, 0],
+        [0, 1, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1],
+      ],
+      "0": [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 1, 1],
+        [1, 0, 1, 0, 1],
+        [1, 1, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      "1": [
+        [0, 0, 1, 0, 0],
+        [0, 1, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [1, 1, 1, 1, 1],
+      ],
+      "2": [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [0, 0, 0, 0, 1],
+        [0, 0, 0, 1, 0],
+        [0, 0, 1, 0, 0],
+        [0, 1, 0, 0, 0],
+        [1, 1, 1, 1, 1],
+      ],
+      "3": [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [0, 0, 0, 0, 1],
+        [0, 0, 1, 1, 0],
+        [0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      "4": [
+        [0, 0, 0, 1, 0],
+        [0, 0, 1, 1, 0],
+        [0, 1, 0, 1, 0],
+        [1, 0, 0, 1, 0],
+        [1, 1, 1, 1, 1],
+        [0, 0, 0, 1, 0],
+        [0, 0, 0, 1, 0],
+      ],
+      "5": [
+        [1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0],
+        [0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      "6": [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      "7": [
+        [1, 1, 1, 1, 1],
+        [0, 0, 0, 0, 1],
+        [0, 0, 0, 1, 0],
+        [0, 0, 1, 0, 0],
+        [0, 1, 0, 0, 0],
+        [0, 1, 0, 0, 0],
+        [0, 1, 0, 0, 0],
+      ],
+      "8": [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      "9": [
+        [0, 1, 1, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 1],
+        [0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0],
+      ],
+      " ": [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+      ],
+    };
+
+    function renderDotMatrix(
+      text: string,
+      container: HTMLElement,
+      size = 12,
+      color = "#00ff88",
+      glow = 10
+    ) {
+      container.innerHTML = "";
+      container.style.setProperty("--dot-size", size + "px");
+      container.style.setProperty("--dot-color", color);
+
+      const chars = text.toUpperCase().split("");
+
+      chars.forEach((char) => {
+        const pattern = dotPatterns[char] || dotPatterns[" "];
+        const charElement = document.createElement("div");
+        charElement.className = "dot-char";
+
+        pattern.forEach((row) => {
+          const rowElement = document.createElement("div");
+          rowElement.className = "dot-row";
+
+          row.forEach((dot) => {
+            const dotElement = document.createElement("span");
+            dotElement.className = `dot ${dot ? "on" : "off"}`;
+            if (dot && glow > 0) {
+              dotElement.style.boxShadow = `0 0 ${glow}px ${color}`;
+            }
+            rowElement.appendChild(dotElement);
+          });
+
+          charElement.appendChild(rowElement);
+        });
+
+        container.appendChild(charElement);
+      });
+    }
+
+    // Event listeners
+    const textInput: any = document.getElementById("textInput");
+    const sizeSlider: any = document.getElementById("sizeSlider");
+    const sizeValue: any = document.getElementById("sizeValue");
+    const colorSelect: any = document.getElementById("colorSelect");
+    const glowSlider: any = document.getElementById("glowSlider");
+    const dotDisplay: any = document.getElementById("dotDisplay");
+
+    function updateDisplay() {
+      const text = textInput.value || "DOTGRID";
+      const size = parseInt(sizeSlider.value);
+      const color = colorSelect.value;
+      const glow = parseInt(glowSlider.value);
+
+      sizeValue.textContent = size + "px";
+      renderDotMatrix(text, dotDisplay, size, color, glow);
+    }
+
+    textInput.addEventListener("input", updateDisplay);
+    sizeSlider.addEventListener("input", updateDisplay);
+    colorSelect.addEventListener("change", updateDisplay);
+    glowSlider.addEventListener("input", updateDisplay);
+
+    // Ejemplos
+    function loadExamples() {
+      renderDotMatrix(
+        "TECH LOGO",
+        document.getElementById("example1") as HTMLElement,
+        14,
+        "#0099ff",
+        8
+      );
+      renderDotMatrix(
+        "AEROPUERTO SALIDA 12",
+        document.getElementById("example2") as HTMLElement,
+        10,
+        "#00ff88",
+        5
+      );
+      renderDotMatrix(
+        "MATRIX 2025",
+        document.getElementById("example3") as HTMLElement,
+        12,
+        "#ff0066",
+        10
+      );
+    }
+
+    // Funciones de descarga
+    function copyCode() {
+      const code = `/* DotGrid CSS */
+.dot-display {
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  line-height: 1;
+}
+
+.dot-char {
+  display: inline-block;
+  margin: 0 2px;
+  vertical-align: top;
+}
+
+.dot-row {
+  display: block;
+  height: var(--dot-size);
+  line-height: var(--dot-size);
+}
+
+.dot {
+  display: inline-block;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  margin: 0 1px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.dot.on {
+  background: var(--dot-color);
+  box-shadow: 0 0 10px var(--dot-color);
+}
+
+.dot.off {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* JavaScript patterns object included */`;
+
+      navigator.clipboard.writeText(code).then(() => {
+        alert("¡Código CSS copiado al portapapeles!");
+      });
+    }
+
+    function downloadHTML() {
+      const blob = new Blob([document.documentElement.outerHTML], {
+        type: "text/html",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "dotgrid-font.html";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Inicializar
+    updateDisplay();
+    loadExamples();
+  </script>
+
+<style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #0f0f23, #1a1a2e);
+      color: #fff;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      padding: 40px 0;
+      border-bottom: 1px solid #333;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 3em;
+      margin: 0;
+      color: #00ff88;
+      text-shadow: 0 0 20px #00ff88;
+    }
+
+    .demo-section {
+      margin: 40px 0;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      border: 1px solid rgba(0, 255, 136, 0.2);
+    }
+
+    .demo-section h2 {
+      color: #00ff88;
+      margin-bottom: 20px;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1em;
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid #00ff88;
+      border-radius: 8px;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      margin: 20px 0;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-group label {
+      color: #00ff88;
+      font-weight: bold;
+    }
+
+    .control-group input,
+    .control-group select {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid #00ff88;
+      color: #fff;
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .preview {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      margin: 20px 0;
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: auto;
+    }
+
+    .dot-display {
+      font-family: "Courier New", monospace;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .dot-char {
+      display: inline-block;
+      margin: 0 2px;
+      vertical-align: top;
+    }
+
+    .dot-row {
+      display: block;
+      height: var(--dot-size);
+      line-height: var(--dot-size);
+    }
+
+    .dot {
+      display: inline-block;
+      width: var(--dot-size);
+      height: var(--dot-size);
+      margin: 0 1px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .dot.on {
+      background: var(--dot-color);
+      box-shadow: 0 0 10px var(--dot-color);
+    }
+
+    .dot.off {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .examples {
+      display: grid;
+      gap: 20px;
+    }
+
+    .example-item {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .example-label {
+      color: #00ff88;
+      margin-bottom: 10px;
+      font-size: 0.9em;
+    }
+
+    .btn {
+      background: linear-gradient(45deg, #00ff88, #00cc6a);
+      color: #000;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 5px;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+    }
+
+    .download-section {
+      text-align: center;
+      padding: 30px;
+      background: rgba(0, 255, 136, 0.1);
+      border-radius: 15px;
+      margin: 40px 0;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .feature {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+      border-left: 4px solid #00ff88;
+    }
+
+    .feature h3 {
+      color: #00ff88;
+      margin-bottom: 10px;
+    }
+  </style>

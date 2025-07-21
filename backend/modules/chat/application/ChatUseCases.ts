@@ -6,6 +6,7 @@ import type { ChatService } from "../@core-contracts/domain/services.ts";
 import type { MessageEmbedding } from "../@core-contracts/domain/entities";
 import type { VectorStore } from "../@core-contracts/domain/repositories.ts";
 import { AgentUseCases } from "../../AI/application/AgentUseCases";
+import { v4 as uuid } from "uuid";
 const agentUseCases = new AgentUseCases();
 
 // const agent = ChatAgent.getInstance();
@@ -42,9 +43,10 @@ export class ChatUseCases implements ChatUseCasesContract {
       const context = searchResults.join("\n");
       const prompt: any = `
     ---
-    Genenera una respuesta acorde al siguiente contexto:
+    Contexto
     ${context}
     ---
+    Pregunta
     ${message.content}
     ---
     `;
@@ -58,13 +60,25 @@ export class ChatUseCases implements ChatUseCasesContract {
   async response(
     chatId: string,
     onStream: (chunk: string) => void
-  ): Promise<void> {
+  ): Promise<string> {
     try {
       if (!chatId) {
         throw new Error("Chat ID is required");
       }
+      const response = await agentUseCases.getResponseFromAgent(
+        chatId,
+        onStream
+      );
 
-      agentUseCases.getResponseFromAgent(chatId, onStream);
+      const agentId = uuid()
+      this.appendMessageToChat(chatId, {
+        chatId,
+        content: response,
+        id: uuid(),
+        timestamp: new Date(),
+        sender: `agent:${agentId}`,
+      });
+      return response;
       // agent.askAI(prompt);
     } catch (error) {
       console.log(error);

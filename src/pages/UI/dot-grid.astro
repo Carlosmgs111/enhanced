@@ -1,0 +1,146 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ArrayGenerator from "../../components/ArrayGenerator.tsx";
+---
+
+<Layout>
+  <div class="container">
+    <header class="header">
+      <h1>DotGrid</h1>
+      <p>Fuente Original Inspirada en Matriz de Puntos</p>
+      <p>
+        Diseñada especialmente para pantallas digitales y señalización moderna
+      </p>
+    </header>
+    <div class="demo-section">
+      <div id="array-generator">
+        <ArrayGenerator client:load />
+      </div>
+      <div id="character"></div>
+      <div class="bg-lime-500 p-8 inline-block flex gap-4" id="svg-container">
+        <div id="svg-a"></div>
+        <div id="svg-b"></div>
+        <div id="svg-c"></div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script >
+    import { matrixToFontSVG } from "../../lib/dot-grid-svg";
+  import type { config } from "../../lib/dot-grid-svg";
+  import { matrix } from "../../stores/matrixState";
+  document.addEventListener("astro:page-load", () => {
+  matrix.set(Array(17).fill(null).map(() => Array(11).fill(0)));
+
+  // Escuchar cambios del estado
+  matrix.subscribe((newState: any) => {
+    console.log("Estado actualizado desde React:", newState);
+
+    // Aquí puedes hacer lo que necesites con el estado actualizado
+    let container = document.getElementById("svg-c");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "svg-c";
+      document.body.appendChild(container);
+    }
+    container.innerHTML = matrixToFontSVG(newState  , {
+      pointRadius: 8,
+      pointColor: "#006064",
+      backgroundColor: "transparent",
+      padding: 10,
+      spacing: 20,
+      character: "a",
+      makeSelectable: true,
+    });
+  });
+
+  const a = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1],
+  ];
+  const b = [
+    [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+  ];
+
+  // Generar SVG con configuración personalizada
+  const customOptions: config = {
+    pointRadius: 8,
+    pointColor: "#000",
+    backgroundColor: "transparent",
+    padding: 10,
+    spacing: 20,
+    character: "a",
+    makeSelectable: true,
+  };
+
+  const aSvgResult = matrixToFontSVG(a, customOptions);
+  const bSvgResult = matrixToFontSVG(b, { ...customOptions, character: "b" });
+
+
+  console.log(aSvgResult);
+  console.log(bSvgResult);
+
+  let containerA = document.getElementById("svg-a");
+  let containerB = document.getElementById("svg-b");
+  if (!containerA || !containerB) {
+    containerA = document.createElement("div");
+    containerB = document.createElement("div");
+    containerA.id = "svg-a";
+    containerB.id = "svg-b";
+    document.body.appendChild(containerA);
+    document.body.appendChild(containerB);
+  }
+  containerA.innerHTML = aSvgResult;
+  containerB.innerHTML = bSvgResult;
+
+  // function displaySVG(svgs: string[], containerId = "svg-container-a") {
+  //   let container = document.getElementById(containerId);
+  //   if (!container) {
+  //     container = document.createElement("div");
+  //     container.id = containerId;
+  //     container.style.cssText =
+  //       "margin: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9;";
+  //     document.body.appendChild(container);
+  //   }
+
+  //   // Insertar el SVG en el contenedor
+  //   container.innerHTML = svgs.join("");
+  //   return container;
+  // }
+
+  // displaySVG([aSvgResult, bSvgResult]);
+  });
+ 
+</script>

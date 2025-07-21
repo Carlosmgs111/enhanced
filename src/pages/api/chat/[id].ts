@@ -46,9 +46,16 @@ export async function GET({ params }: APIContext) {
     }
     const stream = new ReadableStream({
       async start(controller) {
-        await chatUseCases.response(id as string, (data: string) => {
-          controller.enqueue(`data: ${JSON.stringify({ data: data })}\n\n`);
-        });
+        const isDone = await chatUseCases.response(
+          id as string,
+          (data: string) => {
+            controller.enqueue(`data: ${JSON.stringify({ data: data })}\n\n`);
+          }
+        );
+        if (isDone) {
+          console.log("Stream closed");
+          controller.close();
+        }
       },
     });
     return new Response(stream, {

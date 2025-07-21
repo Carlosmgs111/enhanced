@@ -24,7 +24,6 @@
     "astro": "^5.11.1",
     "chromadb": "^3.0.9",
     "langchain": "^0.3.30",
-    "lucide-react": "^0.525.0",
     "mongodb": "^6.17.0",
     "mongoose": "^8.16.3",
     "nanostore": "^1.2.1",

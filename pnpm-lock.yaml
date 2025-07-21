@@ -47,9 +47,6 @@ dependencies:
   langchain:
     specifier: ^0.3.30
     version: 0.3.30(@langchain/core@0.3.65)(@langchain/groq@0.2.3)(axios@1.10.0)(openai@5.10.1)
-  lucide-react:
-    specifier: ^0.525.0
-    version: 0.525.0(react@19.1.0)
   mongodb:
     specifier: ^6.17.0
     version: 6.17.0
@@ -3954,14 +3951,6 @@ packages:
     dependencies:
       yallist: 3.1.1
     dev: true
-
-  /lucide-react@0.525.0(react@19.1.0):
-    resolution: {integrity: sha512-Tm1txJ2OkymCGkvwoHt33Y2JpN5xucVq1slHcgE6Lk0WjDfjgKWor5CdVER8U6DvcfMwh4M8XxmpTiyzfmfDYQ==}
-    peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-    dependencies:
-      react: 19.1.0
-    dev: false
 
   /magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}

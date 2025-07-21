@@ -1,0 +1,85 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { MatrixPanel } from "../../components/MatrixPanel";
+---
+
+<Layout>
+  <div class="container flex flex-col items-center justify-center">
+    <header class="header">
+      <h1>Dotted Font</h1>
+      <p>Fuente Original Inspirada en Matriz de Puntos</p>
+      <p>
+        Diseñada especialmente para pantallas digitales y señalización moderna
+      </p>
+    </header>
+    <div class="demo-section">
+      <div id="array-generator">
+        
+        <MatrixPanel client:load />
+      </div>
+      <div id="character"></div>
+      <div class="bg-lime-500 p-8 inline-block flex gap-4" id="svg-container">
+        <div id="svg-a"></div>
+        <div id="svg-b"></div>
+        <div id="svg-c"></div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { matrixToFontSVG } from "../../lib/dot-grid-svg";
+  import type { config } from "../../lib/dot-grid-svg";
+  import { matrix } from "../../stores/matrixState";
+  import dottedFont from "../../db/dotted-font-4.json";
+  document.addEventListener("astro:page-load", () => {
+    matrix.set(
+      Array(17)
+        .fill(null)
+        .map(() => Array(11).fill(0))
+    );
+    // Generar SVG con configuración personalizada
+    const customOptions: config = {
+      pointRadius: 8,
+      pointColor: "#000",
+      backgroundColor: "transparent",
+      padding: 10,
+      spacing: 20,
+      character: "a",
+      makeSelectable: true,
+    };
+
+    // Escuchar cambios del estado
+    matrix.subscribe((newState: any) => {
+      let container = document.getElementById("svg-c");
+      if (!container) {
+        container = document.createElement("div");
+        container.id = "svg-c";
+        document.body.appendChild(container);
+      }
+      container.innerHTML = matrixToFontSVG(newState, {
+        ...customOptions,
+        makeSelectable: true,
+      });
+    });
+
+    const aSvgResult = matrixToFontSVG(dottedFont.a, customOptions);
+    const bSvgResult = matrixToFontSVG(dottedFont.b, {
+      ...customOptions,
+      character: "b",
+    });
+
+    let containerA = document.getElementById("svg-a");
+    let containerB = document.getElementById("svg-b");
+    if (!containerA || !containerB) {
+      containerA = document.createElement("div");
+      containerB = document.createElement("div");
+      containerA.id = "svg-a";
+      containerB.id = "svg-b";
+      document.body.appendChild(containerA);
+      document.body.appendChild(containerB);
+    }
+    containerA.innerHTML = aSvgResult;
+    containerB.innerHTML = bSvgResult;
+  });
+</script>

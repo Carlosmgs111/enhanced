@@ -1,8 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 ---
+
 <Layout>
-<div class="container">
+  <div class="container">
     <header class="header">
       <h1>DotGrid</h1>
       <p>Fuente Original Inspirada en Matriz de Puntos</p>
@@ -107,15 +108,14 @@ import Layout from "../../layouts/Layout.astro";
     <div class="download-section">
       <h2>📦 Implementar DotGrid</h2>
       <p>
-        Copia el código CSS y JavaScript para usar esta fuente en tus
-        proyectos
+        Copia el código CSS y JavaScript para usar esta fuente en tus proyectos
       </p>
       <button class="btn" onclick="copyCode()">📋 Copiar Código</button>
       <button class="btn" onclick="downloadHTML()">📄 Descargar HTML</button>
     </div>
   </div>
 
-<script>
+  <script>
     // Patrones de matriz 5x7 para caracteres
     const dotPatterns: Record<string, number[][]> = {
       A: [
@@ -602,7 +602,7 @@ import Layout from "../../layouts/Layout.astro";
     loadExamples();
   </script>
 
-<style>
+  <style>
     body {
       margin: 0;
       padding: 20px;
@@ -793,4 +793,5 @@ import Layout from "../../layouts/Layout.astro";
       color: #00ff88;
       margin-bottom: 10px;
     }
-  </style>
+  </style></Layout
+>

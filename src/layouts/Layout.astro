@@ -1,5 +1,8 @@
 ---
+import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
+const path = Astro.url.pathname;
+console.log(path);
 ---
 
 <!doctype html>
@@ -15,12 +18,12 @@ import { ClientRouter } from "astro:transitions";
   <body class="p-4">
     <ul class="list-disc list-inside pb-8">
       <li><a class="underline" href="/">main</a></li>
-      <li><a class="underline" href="/UI/dot-grid">dot-grid</a></li>
+      <li><a class="underline" href="/UI-design/dot-grid">dot-grid</a></li>
       <li>
-        <a class="underline" href="/UI/dot-grid-to-font">dot-grid-to-font</a>
+        <a class="underline" href="/UI-design/dot-grid-to-font">dot-grid-to-font</a>
       </li>
       <li>
-        <a class="underline" href="/UI/dot-grid-claude">dot-grid-claude</a>
+        <a class="underline" href="/UI-design/dot-grid-claude">dot-grid-claude</a>
       </li>
     </ul>
       <slot />

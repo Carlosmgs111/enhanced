@@ -8,8 +8,8 @@ export class HFEmbeddingGenerator implements EmbeddingsGenerator {
   }
   async generateEmbedding(content: string): Promise<number[]> {
     try {
-      const result = await embeddingsModel.embedQuery(content);
-      return result;
+      const result = await embeddingsModel.doEmbed({values:[content]});
+      return result.embeddings[0];
     } catch (error) {
       console.error("Error generating HuggingFace embedding", error as Error);
       throw error;
@@ -17,8 +17,8 @@ export class HFEmbeddingGenerator implements EmbeddingsGenerator {
   }
   async generateEmbeddings(contents: string[]): Promise<number[][]> {
     try {
-      const result = await embeddingsModel.embedDocuments(contents);
-      return result;
+      const result = await embeddingsModel.doEmbed({values:contents});
+      return result.embeddings;
     } catch (error) {
       console.error("Error generating HuggingFace embeddings", error as Error);
       throw error;

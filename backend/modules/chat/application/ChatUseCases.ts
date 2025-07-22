@@ -42,13 +42,12 @@ export class ChatUseCases implements ChatUseCasesContract {
       console.log({ searchResults });
       const context = searchResults.join("\n");
       const prompt: any = `
-    ---
-    Contexto
+    <context>
     ${context}
-    ---
-    Pregunta
+    </context>
+    <question>
     ${message.content}
-    ---
+    </question>
     `;
       console.log({ prompt });
       return await agentUseCases.askToAgent(chatId, prompt);
@@ -69,6 +68,8 @@ export class ChatUseCases implements ChatUseCasesContract {
         chatId,
         onStream
       );
+
+      // console.log({ response });
 
       const agentId = uuid()
       this.appendMessageToChat(chatId, {

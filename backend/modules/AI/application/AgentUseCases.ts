@@ -1,13 +1,14 @@
 import type { AgentUseCases as AgentUseCasesContract } from "../@core-contracts/application/useCases";
 import type { Agent } from "../@core-contracts/domain/entities";
 import type { AgentRepository } from "../@core-contracts/domain/repositories";
-import { chatAgent } from "../../shared/infrastructure/config/services";
-import type { ChatGroqCallOptions } from "@langchain/groq";
+import { model } from "../../shared/infrastructure/config/services";
+import { streamText } from "ai";
 
 export class AgentUseCases implements AgentUseCasesContract {
   // private agentRepository: AgentRepository;
   messages: Record<string, string> = {};
-  constructor() { // agentRepository: AgentRepository
+  constructor() {
+    // agentRepository: AgentRepository
     // this.agentRepository = agentRepository;
   }
   async askToAgent(chatId: string, message: string): Promise<boolean> {
@@ -25,17 +26,17 @@ export class AgentUseCases implements AgentUseCasesContract {
     if (!this.messages[chatId]) {
       throw new Error("Message is required");
     }
-    const options: ChatGroqCallOptions = {
-     
-    };
-    for await (const chunk of await chatAgent.stream(
-      this.messages[chatId],
-      options
-    )) {
-      response += chunk.content as string;
-      if (onStream) onStream(chunk.content as string);
+    const { fullStream } = await streamText({
+      model,
+      prompt: this.messages[chatId],
+    });
+    console.log({ fullStream });
+    for await (const chunk of fullStream) {
+      if(chunk.type === "text-delta"){
+        response += chunk.textDelta;
+        if (onStream) onStream(chunk.textDelta);
+      }
     }
-    // console.log({ response });
     return response;
   }
   createAgent(agent: Agent): Promise<Agent> {

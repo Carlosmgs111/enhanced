@@ -1,7 +1,7 @@
 import type { APIContext } from "astro";
-import { chatUseCases } from "../../../../backend/modules/chat";
 
 export async function POST({ params, request }: APIContext) {
+  const { chatUseCases } = await import("../../../../backend/modules/chat");
   try {
     const { id } = params;
     const { message, chat } = await request.json();
@@ -20,6 +20,7 @@ export async function POST({ params, request }: APIContext) {
   }
 }
 export async function PATCH({ params, request }: APIContext) {
+  const { chatUseCases } = await import("../../../../backend/modules/chat");
   try {
     const { id } = params;
     const { message } = await request.json();
@@ -39,6 +40,7 @@ export async function PATCH({ params, request }: APIContext) {
 }
 
 export async function GET({ params }: APIContext) {
+  const { chatUseCases } = await import("../../../../backend/modules/chat");
   try {
     const { id } = params;
     if (!id) {

@@ -6,7 +6,7 @@
   </article>
   <form class="flex flex-col gap-2">
     <input
-      class="border border-black"
+      class="border border-black cur"
       type="text"
       value="Hola, como estas?"
     /><button>Enviar</button>
@@ -20,7 +20,7 @@
   const receiveMessage = () => {
     try {
       let text = "";
-      const eventSource = new EventSource(`/api/chat/4b2dd990-284a-4efe-afd5-ffa9ac65430c`);
+      const eventSource = new EventSource(`http://localhost:3000/api/chat/4b2dd990-284a-4efe-afd5-ffa9ac65430c`);
       eventSource.onmessage = (event) => {
         if (event.data === "[DONE]") {
           eventSource.close();
@@ -56,7 +56,7 @@
     input.value = "";
 
     const response = await fetch(
-      `/api/chat/4b2dd990-284a-4efe-afd5-ffa9ac65430c`,
+      `http://localhost:3000/api/chat/4b2dd990-284a-4efe-afd5-ffa9ac65430c`,
       {
         method: "PATCH",
         headers: {

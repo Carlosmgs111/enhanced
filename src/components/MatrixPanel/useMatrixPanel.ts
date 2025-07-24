@@ -6,6 +6,9 @@ export const useMatrixPanel = () => {
   const [rows, setRows] = useState(17);
   const [cols, setCols] = useState(11);
   const [isDragging, setIsDragging] = useState(false);
+  const [character, setCharacter] = useState(() => "");
+  const [matrixIsLocked, setMatrixIsLocked] = useState(false);
+  const [axisIsLocked, setAxisIsLocked] = useState(false);
   const [dragMode, setDragMode] = useState<
     "toggle" | "activate" | "deactivate"
   >("toggle");
@@ -166,6 +169,17 @@ export const useMatrixPanel = () => {
     }
   }, []);
 
+  const saveMatrix = async () => {
+    const matrixData = matrix.get();
+    fetch("http://localhost:3000/api/dotted-font", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ matrix: matrixData, character }),
+    });
+  };
+
   useEffect(() => {
     updateDimensions();
   }, [rows, cols]);
@@ -208,5 +222,12 @@ export const useMatrixPanel = () => {
     deactivateAll,
     toggleModeLabels,
     downloadMatrix,
+    saveMatrix,
+    character,
+    setCharacter,
+    matrixIsLocked,
+    setMatrixIsLocked,
+    axisIsLocked,
+    setAxisIsLocked,
   };
 };

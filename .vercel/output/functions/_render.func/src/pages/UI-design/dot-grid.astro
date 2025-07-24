@@ -31,11 +31,7 @@ import { MatrixPanel } from "../../components/MatrixPanel";
   import { matrixToFontSVG } from "../../lib/dot-grid-svg";
   import type { config } from "../../lib/dot-grid-svg";
   import { matrix } from "../../stores/matrixState";
-  // import dottedFont from "../../db/dotted-font-4.json";
-  const dottedFont = await fetch("http://localhost:3000/api/dotted-font").then(
-    (res) => res.json()
-  );
-  console.log({dottedFont});
+  import dottedFont from "../../db/dotted-font-4.json";
   document.addEventListener("astro:page-load", () => {
     matrix.set(
       Array(17)

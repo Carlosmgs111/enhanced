@@ -164,7 +164,7 @@ export const ControlPanel = ({
             })
           }
           onMouseLeave={() => setPanelActionLabel(null)}
-          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200`}
+          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200 active:bg-gray-200`}
         >
           <input
             onChange={(e) => {

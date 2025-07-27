@@ -9,7 +9,9 @@ export type config = {
   forFont?: boolean;
   unitsPerEm?: number;
   advanceWidth?: number;
+  size?: number | string;
 };
+
 export function matrixToSVG(
   matrix: number[][],
   config: config = {
@@ -36,13 +38,13 @@ export function matrixToSVG(
     );
   }
 
-  // Calcular dimensiones del SVG
+  // Calcular dimensiones del SVG (SIEMPRE las mismas, sin modificar)
   const gridWidth = (cols - 1) * config.spacing + config.pointRadius * 2;
   const gridHeight = (rows - 1) * config.spacing + config.pointRadius * 2;
   const svgWidth = gridWidth + config.padding * 2;
   const svgHeight = gridHeight + config.padding * 2;
 
-  // Crear elementos SVG
+  // Crear elementos SVG (EXACTAMENTE como el código original)
   let svgContent = [];
 
   // Fondo
@@ -61,7 +63,7 @@ export function matrixToSVG(
           >${config.character}</text>`);
   }
 
-  // Puntos basados en la matriz
+  // Puntos basados en la matriz (EXACTAMENTE como el código original)
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       if (matrix[row][col] === 1) {
@@ -76,77 +78,29 @@ export function matrixToSVG(
     }
   }
 
-  // Construir el SVG completo
-  const svg = `<svg width="${svgWidth}" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg">
+  // SVG base (SIEMPRE igual)
+  const baseSvg = `<svg width="${svgWidth}" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg">
         ${svgContent.join("\n    ")}
       </svg>`;
 
-  return svg;
-}
-
-// ? enhanced version
-export function matrixToFontSVG(
-    matrix: number[][],
-    config: config
-  ): string {
-    // Si no es para fuente, usar la función original
-    if (!config.forFont) {
-      return matrixToSVG(matrix, config);
-    }
-  
-    // Configuración específica para fuentes
-    const fontConfig = {
-      unitsPerEm: config.unitsPerEm || 1000,
-      advanceWidth: config.advanceWidth || 600,
-      ...config
-    };
-  
-    if (!matrix || !Array.isArray(matrix) || matrix.length === 0) {
-      throw new Error("La matriz debe ser un array bidimensional válido");
-    }
-  
-    const rows = matrix.length;
-    const cols = matrix[0].length;
-  
-    if (!matrix.every((row) => Array.isArray(row) && row.length === cols)) {
-      throw new Error("Todas las filas de la matriz deben tener la misma longitud");
-    }
-  
-    // Calcular dimensiones del grid original
-    const gridWidth = (cols - 1) * config.spacing + config.pointRadius * 2;
-    const gridHeight = (rows - 1) * config.spacing + config.pointRadius * 2;
-    const totalWidth = gridWidth + config.padding * 2;
-    const totalHeight = gridHeight + config.padding * 2;
-  
-    // Escalar al sistema de coordenadas de fuente
-    const scaleX = fontConfig.advanceWidth / totalWidth;
-    const scaleY = fontConfig.unitsPerEm / totalHeight;
-  
-    let svgContent = [];
-  
-    // Para fuentes: solo los puntos, sin fondo
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        if (matrix[row][col] === 1) {
-          // Posición original
-          const origX = config.padding + config.pointRadius + col * config.spacing;
-          const origY = config.padding + config.pointRadius + row * config.spacing;
-  
-          // Escalar y invertir Y para fuentes (origen abajo-izquierda)
-          const x = origX * scaleX;
-          const y = fontConfig.unitsPerEm - (origY * scaleY);
-  
-          svgContent.push(
-            `<circle cx="${x}" cy="${y}" r="${config.pointRadius * Math.min(scaleX, scaleY)}" fill="${config.pointColor}"/>`
-          );
-        }
-      }
-    }
-  
-    // SVG con viewBox para fuentes
-    const svg = `<svg width="${fontConfig.advanceWidth}" height="${fontConfig.unitsPerEm}" viewBox="0 0 ${fontConfig.advanceWidth} ${fontConfig.unitsPerEm}" xmlns="http://www.w3.org/2000/svg">
-      ${svgContent.join('\n    ')}
-    </svg>`;
-  
-    return svg;
+  // Si no hay size, devolver SVG original
+  if (config.size === undefined) {
+    return baseSvg;
   }
+
+  // Si hay size, envolver en un div con CSS que escale todo
+  // Escalar basándose en la dimensión mayor para que todos los glifos tengan tamaño visual similar
+  let containerStyle = '';
+  if (typeof config.size === 'number') {
+    const maxDimension = Math.max(svgWidth, svgHeight);
+    const scale = config.size / maxDimension;
+    const finalWidth = svgWidth * scale;
+    const finalHeight = svgHeight * scale;
+    containerStyle = `width: ${finalWidth}px; height: ${finalHeight}px; transform: scale(${scale}); transform-origin: 0 0;`;
+  } else {
+    const maxDimension = Math.max(svgWidth, svgHeight);
+    containerStyle = `width: calc(${config.size} * ${svgWidth / maxDimension}); height: calc(${config.size} * ${svgHeight / maxDimension}); transform: scale(calc(${config.size} / ${maxDimension}px)); transform-origin: 0 0;`;
+  }
+
+  return `<div style="display: inline-block; overflow: visible; ${containerStyle}">${baseSvg}</div>`;
+}

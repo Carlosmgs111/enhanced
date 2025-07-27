@@ -1,4 +1,5 @@
-/** @type {import('tailwindcss').Config} */ 
+/** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
@@ -17,7 +18,32 @@ module.exports = {
         "6xl": "4rem",
         "7xl": "5rem",
       },
+      animation: {
+        headShake: "headShake 0.5s ease-in-out",
+      },
+      keyframes: {
+        headShake: {
+          "0%": {
+            transform: "translateX(0)",
+          },
+          "6.5%": {
+            transform: "translateX(-3px) rotateY(-9deg)",
+          },
+          "18.5%": {
+            transform: "translateX(2px) rotateY(7deg)",
+          },
+          "31.5%": {
+            transform: "translateX(-1px) rotateY(-5deg)",
+          },
+          "43.5%": {
+            transform: "translateX(1px) rotateY(3deg)",
+          },
+          "50%": {
+            transform: "translateX(0)",
+          },
+        },
+      },
     },
-  },  
+  },
   plugins: [],
 };

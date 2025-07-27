@@ -1,26 +1,27 @@
 ---
 // Corners.astro - Versión corregida
-const { size = 6 } = Astro.props;
+const { size = 6, bordersFull = false, color = "gray-400"} = Astro.props;
+
 ---
 
 <div style="display: contents;">
   <div class="relative">
     <slot />
     <span 
-      class="absolute top-0 left-0 border-t-[1px] border-l-[1px] border-gray-400 pointer-events-none"
-      style={`width: ${size}px; height: ${size}px;`}
+      class={`absolute top-0 left-0 border-t-[1px] border-l-[1px] pointer-events-none`}
+      style={`width: ${size}px; height: ${size}px; border-color: ${color};`}
     ></span>
     <span 
-      class="absolute top-0 right-0 border-t-[1px] border-r-[1px] border-gray-400 pointer-events-none"
-      style={`width: ${size}px; height: ${size}px;`}
+      class={`absolute top-0 right-0 border-t-[1px] border-r-[1px] pointer-events-none`}
+      style={`width: ${size}px; height: ${size}px; border-color: ${color};`}
     ></span>
     <span 
-      class="absolute bottom-0 right-0 border-b-[1px] border-r-[1px] border-gray-400 pointer-events-none"
-      style={`width: ${size}px; height: ${size}px;`}
+      class={`absolute bottom-0 right-0 border-b-[1px] border-r-[1px] pointer-events-none`}
+      style={`width: ${size}px; height: ${size}px; border-color: ${color};`}
     ></span>
     <span 
-      class="absolute bottom-0 left-0 border-b-[1px] border-l-[1px] border-gray-400 pointer-events-none"
-      style={`width: ${size}px; height: ${size}px;`}
+      class={`absolute bottom-0 left-0 border-b-[1px] border-l-[1px] pointer-events-none`}
+      style={`width: ${size}px; height: ${size}px; border-color: ${color};`}
     ></span>
   </div>
 </div>

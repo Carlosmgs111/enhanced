@@ -13,20 +13,24 @@ console.log(path);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
-    <ClientRouter/>
+    <ClientRouter />
   </head>
-  <body class="p-4">
-    <ul class="list-disc list-inside pb-8">
+  <body class="w-full h-fit">
+    <ul class="list-disc list-inside p-8 ">
       <li><a class="underline" href="/">main</a></li>
       <li><a class="underline" href="/UI-design/dot-grid">dot-grid</a></li>
       <li>
-        <a class="underline" href="/UI-design/dot-grid-to-font">dot-grid-to-font</a>
+        <a class="underline" href="/UI-design/dot-grid-to-font"
+          >dot-grid-to-font</a
+        >
       </li>
       <li>
-        <a class="underline" href="/UI-design/dot-grid-claude">dot-grid-claude</a>
+        <a class="underline" href="/UI-design/dot-grid-claude"
+          >dot-grid-claude</a
+        >
       </li>
     </ul>
-      <slot />
+    <slot />
   </body>
 </html>
 

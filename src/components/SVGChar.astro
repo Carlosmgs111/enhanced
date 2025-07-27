@@ -1,0 +1,14 @@
+---
+const { svgString, char } = Astro.props;
+
+function cleanSvg(str: string) {
+  return str.replace(/'/g, "").replace(/\s*\+\s*/g, "");
+}
+---
+
+<div class="p-4 relative hover:backdrop-invert-[20%]" set:html={cleanSvg(svgString)} id={`svg-${char}`}>
+  <div
+    class="absolute top-[352px] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[calc(100%+16px)] h-[1px] bg-black"
+  >
+  </div>
+</div>

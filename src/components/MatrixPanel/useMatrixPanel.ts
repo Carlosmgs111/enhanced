@@ -168,8 +168,18 @@ export const useMatrixPanel = () => {
       }
     }
   }, []);
-
   const saveMatrix = async () => {
+    console.log({character});
+    if(!character){
+      setPanelActionLabel({
+        content: "Por favor, ingresa un carácter:shake",
+        color: "text-red-500",
+      });
+      setTimeout(() => {
+        setPanelActionLabel(null);
+      }, 2000);
+      return;
+    }
     const matrixData = matrix.get();
     fetch("http://localhost:3000/api/dotted-font", {
       method: "POST",

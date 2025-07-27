@@ -33,16 +33,23 @@ export const ControlPanel = ({
   matrixIsLocked: boolean;
   setMatrixIsLocked: (matrixIsLocked: boolean) => void;
 }) => {
+  let panelLabel = "";
+  let panelButton = "";
+  if (panelActionLabel) {
+    [panelLabel, panelButton] = panelActionLabel.content.split(":");
+  }
   return (
     <div className="flex flex-col gap-4 border-l border-gray-400 h-fit relative">
-      <span
-        className={[
-          "absolute text-xs -rotate-90 top-1/2 -left-[18px] w-0 h-0 flex flex-col items-center whitespace-nowrap text-md transition-all duration-300 ease-in-out",
-          panelActionLabel?.content ? panelActionLabel.color : "transparent",
-        ].join(" ")}
-      >
-        {panelActionLabel?.content}
-      </span>
+      <div className="-rotate-90 absolute flex flex-col items-center -top-[-50%] -left-[20px] w-0 h-0">
+        <span
+          className={[
+            "text-xs w-fit h-fit  whitespace-nowrap text-md transition-all duration-150 ease-in-out bg-gray-700 px-2",
+            panelActionLabel?.content ? panelActionLabel.color : "transparent",
+          ].join(" ")}
+        >
+          {panelLabel}
+        </span>
+      </div>
 
       {/* // ? Drag mode selector */}
       <div className=" flex flex-col gap-2 items-center border-r border-gray-400 h-fit px-2 relative">
@@ -113,7 +120,7 @@ export const ControlPanel = ({
               : "text-red-500 ",
           ].join(" ")}
         >
-          {toggleModeLabels[dragMode]}
+          {/* {toggleModeLabels[dragMode]} */}
         </span>
       </div>
       {/* // ? Bulk action selector */}
@@ -129,7 +136,7 @@ export const ControlPanel = ({
             })
           }
           onMouseLeave={() => setPanelActionLabel(null)}
-          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200`}
+          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200 outline-none`}
         >
           ☑
         </button>
@@ -144,7 +151,7 @@ export const ControlPanel = ({
             })
           }
           onMouseLeave={() => setPanelActionLabel(null)}
-          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200`}
+          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200 outline-none active:bg-gray-200`}
         >
           ☒
         </button>
@@ -164,7 +171,7 @@ export const ControlPanel = ({
             })
           }
           onMouseLeave={() => setPanelActionLabel(null)}
-          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200 active:bg-gray-200`}
+          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200 outline-none active:bg-gray-200`}
         >
           <input
             onChange={(e) => {
@@ -172,7 +179,12 @@ export const ControlPanel = ({
             }}
             value={character}
             type="text"
-            className="w-full h-full outline-none border-[1px] border-dashed border-gray-400 text-center font-bold hover:border-gray-600"
+            className={[
+              "w-full h-full outline-none border-[1px] border-dashed border-gray-400 text-center font-bold hover:border-gray-600",
+              panelButton == "shake"
+                ? "border-red-500 animate-headShake duration-500"
+                : "",
+            ].join(" ")}
           />
         </div>
         <button
@@ -184,7 +196,7 @@ export const ControlPanel = ({
             })
           }
           onMouseLeave={() => setPanelActionLabel(null)}
-          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200`}
+          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200 outline-none active:bg-gray-200`}
         >
           ▼
         </button>
@@ -197,7 +209,7 @@ export const ControlPanel = ({
             })
           }
           onMouseLeave={() => setPanelActionLabel(null)}
-          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200`}
+          className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200 outline-none`}
         >
           ☁
         </button>
@@ -205,9 +217,7 @@ export const ControlPanel = ({
           className={[
             "absolute text-green-500 text-xs top-1/2 -right-[4px] w-0 h-0 items-center whitespace-nowrap text-md transition-all duration-200 ease-in-out",
           ].join(" ")}
-        >
-          ⚠ ¡Descarga exitosa!
-        </span>
+        ></span>
       </div>
       {/*  */}
       <div className=" flex flex-col gap-2 items-center border-r border-gray-400 h-fit px-2 relative">
@@ -215,13 +225,17 @@ export const ControlPanel = ({
           onClick={() => {
             setMatrixIsLocked(!matrixIsLocked);
             setPanelActionLabel({
-              content: !matrixIsLocked ? "Desbloquear matriz" : "Bloquear matriz",
+              content: !matrixIsLocked
+                ? "Desbloquear matriz"
+                : "Bloquear matriz",
               color: "text-yellow-500",
             });
           }}
           onMouseEnter={() =>
             setPanelActionLabel({
-              content: matrixIsLocked ? "Matrix bloqueada: Desbloquear matriz" : "Bloquear matriz",
+              content: matrixIsLocked
+                ? "Matrix bloqueada: Desbloquear matriz"
+                : "Bloquear matriz",
               color: matrixIsLocked ? "text-red-500" : "text-yellow-500",
             })
           }

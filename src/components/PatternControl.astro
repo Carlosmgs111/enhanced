@@ -1,0 +1,48 @@
+---
+import Corners from "./Corners.astro";
+---
+
+<div class="p-10">
+  <Corners size={6} bordersFull={false} color={"black"}>
+    <div class="inline-block flex gap-4 p-4" id="svg-container"></div>
+  </Corners>
+</div>
+
+<script>
+  import { matrixToSVG} from "../lib/dot-grid-svg";
+  import type { config } from "../lib/dot-grid-svg";
+  import { matrix } from "../stores/matrixState";
+  
+  document.addEventListener("astro:page-load", () => {
+    matrix.set(
+      Array(17)
+        .fill(null)
+        .map(() => Array(11).fill(0))
+    );
+    // Generar SVG con configuración personalizada
+    const customOptions: config = {
+      pointRadius: 8,
+      pointColor: "#000",
+      backgroundColor: "transparent",
+      padding: 10,
+      spacing: 20,
+      character: "a",
+      makeSelectable: true,
+      size: 400,
+    };
+
+    // Escuchar cambios del estado
+    matrix.subscribe((newState: any) => {
+      let container = document.getElementById(`svg-container`);
+      if (!container) {
+        container = document.createElement("div");
+        container.id = `svg-container`;
+        document.body.appendChild(container);
+      }
+      container.innerHTML = matrixToSVG(newState, {
+        ...customOptions,
+        makeSelectable: true,
+      });
+    });
+  });
+</script>

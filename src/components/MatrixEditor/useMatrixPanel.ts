@@ -8,7 +8,6 @@ export const useMatrixPanel = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [character, setCharacter] = useState(() => "");
   const [matrixIsLocked, setMatrixIsLocked] = useState(false);
-  const [axisIsLocked, setAxisIsLocked] = useState(false);
   const [dragMode, setDragMode] = useState<
     "toggle" | "activate" | "deactivate"
   >("toggle");
@@ -237,7 +236,5 @@ export const useMatrixPanel = () => {
     setCharacter,
     matrixIsLocked,
     setMatrixIsLocked,
-    axisIsLocked,
-    setAxisIsLocked,
   };
 };

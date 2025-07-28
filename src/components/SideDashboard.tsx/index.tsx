@@ -1,4 +1,4 @@
-export const ControlPanel = ({
+export const SideDashboard = ({
   panelActionLabel,
   setPanelActionLabel,
   dragMode,

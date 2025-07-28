@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { AddRowButton } from "./AddRowButton";
 import { RemoveRowButton } from "./RemoveRowButton";
 import { AddColButton } from "./AddColButton";
@@ -6,33 +6,53 @@ import { RemoveColButton } from "./RemoveColButton";
 import { LockAxisButton } from "./LockAxisButton";
 
 export const AxisControl = ({
-  children,
+  matrixRef,
   rows,
   setRows,
   cols,
   setCols,
 }: {
-  children: React.ReactNode;
+  matrixRef: React.RefObject<HTMLDivElement | null>;
   rows: number;
   setRows: (rows: number) => void;
   cols: number;
   setCols: (cols: number) => void;
 }) => {
+  const memoizedPosition = useMemo(() => {
+    const position = matrixRef?.current?.getBoundingClientRect() || {
+      width: 0,
+      height: 0,
+      top: 0,
+      left: 0,
+    };
+    return position;
+  }, [matrixRef?.current?.getBoundingClientRect()]);
+  console.log(memoizedPosition);
+  const { width, height, top, left } = memoizedPosition;
   const [axisIsLocked, setAxisIsLocked] = useState(false);
   const [axisLabel, setAxisLabel] = useState<{
     content: string;
     color: string;
     axis: "rows" | "cols";
   } | null>(null);
+  useEffect(() => {
+    const position = matrixRef?.current?.getBoundingClientRect() || {
+      width: 0,
+      height: 0,
+      top: 0,
+      left: 0,
+    };
+    console.log(position);
+    // setPosition(position);
+  }, [memoizedPosition]);
+
+  useEffect(() => {
+    console.log(matrixRef?.current?.getBoundingClientRect());
+  }, [matrixRef?.current?.getBoundingClientRect().x , matrixRef?.current?.getBoundingClientRect().y]);
+
   return (
-    <div className="inline-block w-fit h-fit ">
-      <div
-        className={`relative`}
-        style={{
-          gridTemplateColumns: `repeat(${cols}, 1fr)`,
-          userSelect: "none", // ? Prevent text selection
-        }}
-      >
+    <div className="inline-block w-fit h-fit absolute -z-100 " style={{ top, left }}>
+      <div className="relative">
         <span
           className={[
             "absolute text-center left-0 w-full h-fit text-xs whitespace-nowrap overflow-hidden bg-gray-700 px-2",
@@ -70,9 +90,9 @@ export const AxisControl = ({
             setAxisLabel={setAxisLabel}
           />
         </div>
-        {children}
+        <div className="w-full h-fit z-[-1000]" style={{ width, height }}></div>
       </div>
-      <div className="w-full h-[1px] border-t-[1px] border-dashed border-gray-400 relative">
+      <div className="w-full h-[1px] -bottom-4 border-t-[1px] border-dashed border-gray-400 relative">
         <AddColButton
           axisIsLocked={axisIsLocked}
           setCols={setCols}

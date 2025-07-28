@@ -1,8 +1,28 @@
-import { SideDashboard } from "../SideDashboard.tsx";
-import { AxisControl } from "../AxisControl";
-import { useMatrixPanel } from "./useMatrixPanel";
+import { useMatrixEditor } from "./useMatrixEditor.ts";
 import Corners from "../Corners";
-export const MatrixPanel = ({ children }: { children: React.ReactNode }) => {
+import { useCallback, useMemo } from "react";
+import { SideDashboard } from "../SideDashboard/index.tsx";
+import { PixelDot } from "./PixelDot";
+
+interface PluginProps {
+  matrixRef: React.RefObject<HTMLDivElement | null>;
+  rows: number;
+  setRows: (rows: number) => void;
+  cols: number;
+  setCols: (cols: number) => void;
+  matrix: any;
+  dragMode: "toggle" | "activate" | "deactivate";
+  setDragMode: (mode: "toggle" | "activate" | "deactivate") => void;
+  isDragging: boolean;
+  matrixIsLocked: boolean;
+  setMatrixIsLocked: (locked: boolean) => void;
+}
+
+export const MatrixEditor = ({
+  plugins,
+}: {
+  plugins?: React.ComponentType<PluginProps>[];
+}) => {
   const {
     matrix,
     rows,
@@ -12,68 +32,71 @@ export const MatrixPanel = ({ children }: { children: React.ReactNode }) => {
     isDragging,
     dragMode,
     setDragMode,
-    panelActionLabel,
-    setPanelActionLabel,
+    matrixIsLocked,
+    setMatrixIsLocked,
+    matrixRef,
     getCursorClass,
     handleMouseDown,
     handleMouseEnter,
-    activateAll,
-    deactivateAll,
-    toggleModeLabels,
-    downloadMatrix,
-    saveMatrix,
-    character,
-    setCharacter,
-    matrixIsLocked,
-    setMatrixIsLocked,
-  } = useMatrixPanel();
+  } = useMatrixEditor();
+
   return (
     <div className="flex p-10 gap-8 ">
-      {/* // ? Matrix panel */}
-      <AxisControl rows={rows} setRows={setRows} cols={cols} setCols={setCols}>
-        <div
-          className={`grid gap-[1px] mb-4 `}
-          style={{
-            gridTemplateColumns: `repeat(${cols}, 1fr)`,
-            userSelect: "none", // ? Prevent text selection
-          }}
-        >
-          {matrix.get().map((row, i) =>
-            row.map((cell, j) => (
-              <Corners size={2} bordersFull={matrixIsLocked}>
-                <button
-                  key={`${i}-${j}`}
-                  disabled={matrixIsLocked}
-                  onMouseDown={() => handleMouseDown(i, j)}
-                  onMouseEnter={() => handleMouseEnter(i, j)}
-                  onDragStart={(e) => e.preventDefault()}
-                  className={`w-6 aspect-square border-[1px] border-dotted border-gray-300 text-sm font-bold  ${
-                    cell === 1 ? "bg-gray-700 border-white" : "hover:bg-gray-50"
-                  } ${isDragging ? "select-none" : ""} ${getCursorClass()} ${
-                    matrixIsLocked ? "!cursor-not-allowed" : ""
-                  }`}
-                ></button>
-              </Corners>
-            ))
-          )}
-        </div>
-      </AxisControl>
-      <SideDashboard
-        {...{
-          panelActionLabel,
-          setPanelActionLabel,
-          dragMode,
-          setDragMode,
-          activateAll,
-          deactivateAll,
-          toggleModeLabels,
-          downloadMatrix,
-          saveMatrix,
-          character,
-          setCharacter,
-          matrixIsLocked,
-          setMatrixIsLocked,
+      {plugins?.map((Plugin, index) => (
+        <Plugin
+          key={index}
+          matrixRef={matrixRef}
+          rows={rows}
+          setRows={setRows}
+          cols={cols}
+          setCols={setCols}
+          dragMode={dragMode}
+          setDragMode={setDragMode}
+          matrix={matrix}
+          matrixIsLocked={matrixIsLocked}
+          setMatrixIsLocked={setMatrixIsLocked}
+          isDragging={isDragging}
+        />
+      ))}
+      <div
+        ref={matrixRef}
+        className={`grid gap-[1px] mb-4 z-1000 `}
+        style={{
+          gridTemplateColumns: `repeat(${cols}, 1fr)`,
+          userSelect: "none", // ? Prevent text selection
         }}
+      >
+        {matrix
+          .get()
+          .map((row, i) =>
+            row.map((cell, j) =>
+              useMemo(
+                () => (
+                  <PixelDot
+                    key={`${i}-${j}`}
+                    i={i}
+                    j={j}
+                    cell={cell}
+                    matrixIsLocked={matrixIsLocked}
+                    isDragging={isDragging}
+                    getCursorClass={getCursorClass}
+                    handleMouseDown={handleMouseDown}
+                    handleMouseEnter={handleMouseEnter}
+                  ></PixelDot>
+                ),
+                [cell, matrixIsLocked, isDragging, getCursorClass]
+              )
+            )
+          )}
+      </div>
+      <SideDashboard
+        setMatrix={matrix.set}
+        matrix={matrix.get()}
+        matrixRef={matrixRef}
+        dragMode={dragMode}
+        setDragMode={setDragMode}
+        matrixIsLocked={matrixIsLocked}
+        setMatrixIsLocked={setMatrixIsLocked}
       />
     </div>
   );

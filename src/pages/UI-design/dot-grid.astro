@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import FontCatalog from "../../components/FontCatalog.astro";
 import PatternControl from "../../components/PatternControl.astro";
-import { MatrixPanel } from "../../components/MatrixEditor";
+import { MatrixEditorComposer } from "../../components/MatrixEditorComposer";
 ---
 
 <Layout>
@@ -18,7 +18,7 @@ import { MatrixPanel } from "../../components/MatrixEditor";
       class="max-w-[1000px] overflow-hidden justify-evenly flex flex-row gap-4 flex-wrap p-1"
     >
       <div id="array-generator">
-        <MatrixPanel client:load />
+        <MatrixEditorComposer client:load />
       </div>
       <div id="char-generator">
         <PatternControl />

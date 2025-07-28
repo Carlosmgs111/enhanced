@@ -1,45 +1,40 @@
+import { useSideDashboard } from "./useSideDashboard";
+
 export const SideDashboard = ({
-  panelActionLabel,
-  setPanelActionLabel,
+  matrixRef,
+  matrix,
+  setMatrix,
   dragMode,
   setDragMode,
-  activateAll,
-  deactivateAll,
-  toggleModeLabels,
-  downloadMatrix,
-  saveMatrix,
-  character,
-  setCharacter,
   matrixIsLocked,
   setMatrixIsLocked,
 }: {
-  panelActionLabel: { content: string; color: string } | null;
-  setPanelActionLabel: (
-    label: { content: string; color: string } | null
-  ) => void;
+  matrixRef: React.RefObject<HTMLDivElement | null>;
+  matrix: number[][];
+  setMatrix: (matrix: number[][]) => void;
   dragMode: "toggle" | "activate" | "deactivate";
   setDragMode: (mode: "toggle" | "activate" | "deactivate") => void;
-  activateAll: () => void;
-  deactivateAll: () => void;
-  toggleModeLabels: {
-    toggle: string;
-    activate: string;
-    deactivate: string;
-  };
-  downloadMatrix: () => void;
-  saveMatrix: () => void;
-  character: string;
-  setCharacter: (character: string) => void;
   matrixIsLocked: boolean;
   setMatrixIsLocked: (matrixIsLocked: boolean) => void;
 }) => {
+  const {
+    panelActionLabel,
+    setPanelActionLabel,
+    activateAll,
+    deactivateAll,
+    toggleModeLabels,
+    downloadMatrix,
+    saveMatrix,
+    character,
+    setCharacter,
+  } = useSideDashboard({ matrix, setMatrix });
   let panelLabel = "";
   let panelButton = "";
   if (panelActionLabel) {
     [panelLabel, panelButton] = panelActionLabel.content.split(":");
   }
   return (
-    <div className="flex flex-col gap-4 border-l border-gray-400 h-fit relative">
+    <div className="flex flex-col gap-4 border-l border-gray-400 h-fit w-fit relative">
       <div className="-rotate-90 absolute flex flex-col items-center -top-[-50%] -left-[20px] w-0 h-0">
         <span
           className={[

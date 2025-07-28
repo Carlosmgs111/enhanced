@@ -43,11 +43,20 @@ export const ControlPanel = ({
       <div className="-rotate-90 absolute flex flex-col items-center -top-[-50%] -left-[20px] w-0 h-0">
         <span
           className={[
-            "text-xs w-fit h-fit  whitespace-nowrap text-md transition-all duration-150 ease-in-out bg-gray-700 px-2",
+            "text-xs w-fit h-fit whitespace-nowrap text-md transition-all duration-150 ease-in-out bg-gray-700 px-2 ",
             panelActionLabel?.content ? panelActionLabel.color : "transparent",
           ].join(" ")}
         >
-          {panelLabel}
+          <i
+            className={[
+              "",
+              panelActionLabel?.content
+                ? panelActionLabel.color
+                : "transparent",
+            ].join(" ")}
+          >
+            {panelLabel}
+          </i>
         </span>
       </div>
 
@@ -58,7 +67,7 @@ export const ControlPanel = ({
           onMouseEnter={() =>
             setPanelActionLabel({
               content: !matrixIsLocked
-                ? "Alterna el estado de cada celda"
+                ? "Alternar el estado de cada celda"
                 : "⚠ Desbloquea la matriz para continuar ⚠",
               color: matrixIsLocked ? "text-red-500" : "text-yellow-500",
             })
@@ -77,7 +86,7 @@ export const ControlPanel = ({
           onMouseEnter={() =>
             setPanelActionLabel({
               content: !matrixIsLocked
-                ? "Siempre activa las celdas (pintar)"
+                ? "Siempre activar las celdas (pintar)"
                 : "⚠ Desbloquea la matriz para continuar ⚠",
               color: matrixIsLocked ? "text-red-500" : "text-green-500",
             })
@@ -96,7 +105,7 @@ export const ControlPanel = ({
           onMouseEnter={() =>
             setPanelActionLabel({
               content: !matrixIsLocked
-                ? "Siempre desactiva las celdas (borrar)"
+                ? "Siempre desactivar las celdas (borrar)"
                 : "⚠ Desbloquea la matriz para continuar ⚠",
               color: matrixIsLocked ? "text-red-500" : "text-red-500",
             })

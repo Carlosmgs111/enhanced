@@ -1,35 +1,37 @@
 ---
 import SVGChar from "./SVGChar.astro";
 import { matrixToSVG } from "../lib/dot-grid-svg";
-import Corners from "./Corners.astro";
 
 const dottedFont = await fetch("http://localhost:3000/api/dotted-font").then(
   (res) => res.json()
 );
 
-const catalog = Object.entries(dottedFont).map(([char, matrix]: any) => ({
-  character: char,
-  svg: matrixToSVG(matrix, {
+const catalog: any[] = [];
+
+Object.entries(dottedFont).forEach(([char, {glyphMatrix}]: any) => {
+  if (!glyphMatrix || !glyphMatrix[0]) {
+    return;
+  }
+  catalog.push({
     character: char,
-    pointRadius: 8,
-    pointColor: "#000",
-    backgroundColor: "transparent",
-    padding: 10,
-    spacing: 20,
-    makeSelectable: false,
-    size: 16,
-  }),
-}));
+    svg: matrixToSVG(glyphMatrix, {
+      character: char,
+      pointRadius: 8,
+      pointColor: "#000",
+      backgroundColor: "transparent",
+      padding: 10,
+      spacing: 20,
+      makeSelectable: false,
+      size: 40,
+    }),
+  });
+});
 ---
 
-<div class="p-8 flex flex-wrap gap-4" id="svg-container">
+<div class="p-4 flex flex-wrap gap-1" id="svg-container">
   {
     catalog.map((item: any) => (
-      <div>
-        <Corners size={6} bordersFull={false} color={"black"}>
-          <SVGChar svgString={item.svg} char={item.character} />
-        </Corners>
-      </div>
+      <SVGChar svgString={item.svg} char={item.character} />
     ))
   }
 </div>

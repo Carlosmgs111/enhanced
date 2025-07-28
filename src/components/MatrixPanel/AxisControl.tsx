@@ -20,6 +20,7 @@ export const AxisControl = ({
   const [axisLabel, setAxisLabel] = useState<{
     content: string;
     color: string;
+    axis: "rows" | "cols";
   } | null>(null);
   return (
     <div className="inline-block w-fit h-fit ">
@@ -32,17 +33,18 @@ export const AxisControl = ({
       >
         <span
           className={[
-            "absolute text-center left-0 -bottom-4 w-full h-fit text-xs whitespace-nowrap overflow-hidden",
+            "absolute text-center left-0 w-full h-fit text-xs whitespace-nowrap overflow-hidden bg-gray-700 px-2",
+            axisLabel?.axis === "rows" ? "-top-4" : "-bottom-4",
             axisLabel?.color,
           ].join(" ")}
         >
-          {axisLabel?.content}
+          <i className={axisLabel?.color}>{axisLabel?.content}</i>
         </span>
         <div className="w-[1px] h-full border-l-[1px] border-dashed border-gray-400 absolute -left-4 top-0 flex items-center">
           <button
             disabled={axisIsLocked}
             className={[
-              "absolute -top-2 -left-5 text-2xl font-thin text-gray-600 transition-all duration-200 ease-in-out",
+              "absolute -top-7 -left-5 text-2xl font-semibold text-gray-600 transition-all duration-200 ease-in-out",
               axisIsLocked ? "!cursor-not-allowed !text-gray-400" : "",
             ].join(" ")}
             onClick={() => {
@@ -54,11 +56,12 @@ export const AxisControl = ({
                   ? "Agregar una fila"
                   : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
                 color: axisIsLocked ? "text-red-500" : "text-green-500",
+                axis: "rows",
               })
             }
             onMouseLeave={() => setAxisLabel(null)}
           >
-            ↑
+            +
           </button>
           <div className="transform -rotate-90 translate-x-[-24px] whitespace-nowrap w-0 h-0 flex flex-col items-center">
             {rows} filas
@@ -66,7 +69,7 @@ export const AxisControl = ({
           <button
             disabled={axisIsLocked}
             className={[
-              "absolute -bottom-2 -left-5 text-2xl font-thin text-gray-600 transition-all duration-200 ease-in-out",
+              "absolute -top-1 -left-5 text-2xl font-semibold text-gray-600 transition-all duration-200 ease-in-out",
               axisIsLocked ? "!cursor-not-allowed !text-gray-400" : "",
             ].join(" ")}
             onClick={() => {
@@ -78,11 +81,12 @@ export const AxisControl = ({
                   ? "Eliminar una fila"
                   : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
                 color: axisIsLocked ? "text-red-500" : "text-yellow-500",
+                axis: "rows",
               })
             }
             onMouseLeave={() => setAxisLabel(null)}
           >
-            ↓
+            -
           </button>
         </div>
         <div
@@ -98,6 +102,7 @@ export const AxisControl = ({
                   ? "Bloquear el control de ejes"
                   : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
                 color: axisIsLocked ? "text-yellow-500" : "text-red-500",
+                axis: "rows",
               })
             }
             onMouseLeave={() => setAxisLabel(null)}
@@ -107,6 +112,7 @@ export const AxisControl = ({
                   ? "Bloquear el control de ejes"
                   : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
                 color: !axisIsLocked ? "text-yellow-500" : "text-red-500",
+                axis: "rows",
               });
               setAxisIsLocked(!axisIsLocked);
             }}
@@ -120,7 +126,7 @@ export const AxisControl = ({
         <button
           disabled={axisIsLocked}
           className={[
-            "absolute -top-2 left-0 text-3xl font-thin text-gray-600 transition-all duration-200 ease-in-out",
+            "absolute -top-2 right-1 text-3xl font-semibold text-gray-600 transition-all duration-200 ease-in-out",
             axisIsLocked ? "!cursor-not-allowed !text-gray-400" : "",
           ].join(" ")}
           onClick={() => {
@@ -132,17 +138,18 @@ export const AxisControl = ({
                 ? "Eliminar una columna"
                 : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
               color: axisIsLocked ? "text-red-500" : "text-yellow-500",
+              axis: "cols",
             })
           }
           onMouseLeave={() => setAxisLabel(null)}
         >
-          ←
+          -
         </button>
         <div className=" text-center">{cols} columnas</div>
         <button
           disabled={axisIsLocked}
           className={[
-            "absolute -top-2 right-0 text-3xl font-thin text-gray-600 transition-all duration-200 ease-in-out",
+            "absolute -top-2 -right-6 text-3xl font-semibold text-gray-600 transition-all duration-200 ease-in-out",
             axisIsLocked ? "!cursor-not-allowed !text-gray-400" : "",
           ].join(" ")}
           onClick={() => {
@@ -154,11 +161,12 @@ export const AxisControl = ({
                 ? "Agregar una columna"
                 : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
               color: axisIsLocked ? "text-red-500" : "text-green-500",
+              axis: "cols",
             })
           }
           onMouseLeave={() => setAxisLabel(null)}
         >
-          →
+          +
         </button>
       </div>
     </div>

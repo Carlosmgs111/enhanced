@@ -1,14 +1,26 @@
 ---
 const { svgString, char } = Astro.props;
+import Corners from "./Corners.astro";
 
 function cleanSvg(str: string) {
   return str.replace(/'/g, "").replace(/\s*\+\s*/g, "");
 }
 ---
 
-<div class="p-4 relative hover:backdrop-invert-[20%]" set:html={cleanSvg(svgString)} id={`svg-${char}`}>
-  <div
-    class="absolute top-[352px] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[calc(100%+16px)] h-[1px] bg-black"
-  >
+<div class="flex flex-row gap-1">
+  <Corners size={6} bordersFull={false} color={"black"}>
+    <div
+      class="p-2 relative hover:backdrop-invert-[20%]"
+      set:html={cleanSvg(svgString)}
+      id={`svg-${char}`}
+    >
+    <div
+      class="absolute top-[77%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[calc(100%+16px)] h-[1px] bg-black"
+    >
+    </div>
+  </div>
+  </Corners>
+  <div class="p-1 aspect-square border border-dashed border-black h-fit items-center justify-center">
+    <span class="text-[16px] font-bold">{char}</span>
   </div>
 </div>

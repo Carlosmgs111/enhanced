@@ -1,27 +1,43 @@
 import { useMatrixEditor } from "./useMatrixEditor.ts";
-import Corners from "../Corners";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { SideDashboard } from "../SideDashboard/index.tsx";
 import { PixelDot } from "./PixelDot";
 
-interface PluginProps {
+export interface PluginProps {
   matrixRef: React.RefObject<HTMLDivElement | null>;
   rows: number;
   setRows: (rows: number) => void;
   cols: number;
   setCols: (cols: number) => void;
   matrix: any;
+  setMatrix: (matrix: any) => void;
   dragMode: "toggle" | "activate" | "deactivate";
   setDragMode: (mode: "toggle" | "activate" | "deactivate") => void;
   isDragging: boolean;
   matrixIsLocked: boolean;
   setMatrixIsLocked: (locked: boolean) => void;
 }
-
+type editorToolsProps = {
+  setPanelActionLabel: (
+    panelActionLabel: {
+      content: string;
+      color: string;
+    } | null
+  ) => void;
+  panelActionLabel: {
+    content: string;
+    color: string;
+  } | null;
+};
 export const MatrixEditor = ({
-  plugins,
+  matrixTools,
+  editorTools,
 }: {
-  plugins?: React.ComponentType<PluginProps>[];
+  matrixTools?: React.ComponentType<PluginProps>[];
+  editorTools?: React.ComponentType<
+    Omit<PluginProps, "rows" | "setRows" | "cols" | "setCols" | "isDragging"> &
+      editorToolsProps
+  >[];
 }) => {
   const {
     matrix,
@@ -42,7 +58,7 @@ export const MatrixEditor = ({
 
   return (
     <div className="flex p-10 gap-8 ">
-      {plugins?.map((Plugin, index) => (
+      {matrixTools?.map((Plugin, index) => (
         <Plugin
           key={index}
           matrixRef={matrixRef}
@@ -53,6 +69,7 @@ export const MatrixEditor = ({
           dragMode={dragMode}
           setDragMode={setDragMode}
           matrix={matrix}
+          setMatrix={matrix.set}
           matrixIsLocked={matrixIsLocked}
           setMatrixIsLocked={setMatrixIsLocked}
           isDragging={isDragging}
@@ -69,24 +86,19 @@ export const MatrixEditor = ({
         {matrix
           .get()
           .map((row, i) =>
-            row.map((cell, j) =>
-              useMemo(
-                () => (
-                  <PixelDot
-                    key={`${i}-${j}`}
-                    i={i}
-                    j={j}
-                    cell={cell}
-                    matrixIsLocked={matrixIsLocked}
-                    isDragging={isDragging}
-                    getCursorClass={getCursorClass}
-                    handleMouseDown={handleMouseDown}
-                    handleMouseEnter={handleMouseEnter}
-                  ></PixelDot>
-                ),
-                [cell, matrixIsLocked, isDragging, getCursorClass]
-              )
-            )
+            row.map((cell, j) => (
+              <PixelDot
+                key={`${i}-${j}`}
+                i={i}
+                j={j}
+                cell={cell}
+                matrixIsLocked={matrixIsLocked}
+                isDragging={isDragging}
+                getCursorClass={getCursorClass}
+                handleMouseDown={handleMouseDown}
+                handleMouseEnter={handleMouseEnter}
+              ></PixelDot>
+            ))
           )}
       </div>
       <SideDashboard
@@ -97,6 +109,7 @@ export const MatrixEditor = ({
         setDragMode={setDragMode}
         matrixIsLocked={matrixIsLocked}
         setMatrixIsLocked={setMatrixIsLocked}
+        editorTools={editorTools}
       />
     </div>
   );

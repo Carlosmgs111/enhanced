@@ -27,7 +27,6 @@ export const AxisControl = ({
     };
     return position;
   }, [matrixRef?.current?.getBoundingClientRect()]);
-  console.log(memoizedPosition);
   const { width, height, top, left } = memoizedPosition;
   const [axisIsLocked, setAxisIsLocked] = useState(false);
   const [axisLabel, setAxisLabel] = useState<{
@@ -35,23 +34,11 @@ export const AxisControl = ({
     color: string;
     axis: "rows" | "cols";
   } | null>(null);
-  useEffect(() => {
-    const position = matrixRef?.current?.getBoundingClientRect() || {
-      width: 0,
-      height: 0,
-      top: 0,
-      left: 0,
-    };
-    console.log(position);
-    // setPosition(position);
-  }, [memoizedPosition]);
 
-  useEffect(() => {
-    console.log(matrixRef?.current?.getBoundingClientRect());
-  }, [matrixRef?.current?.getBoundingClientRect().x , matrixRef?.current?.getBoundingClientRect().y]);
+  if (!matrixRef?.current?.getBoundingClientRect()) return null;
 
   return (
-    <div className="inline-block w-fit h-fit absolute -z-100 " style={{ top, left }}>
+    <div className="inline-block w-fit h-fit absolute -z-100 ">
       <div className="relative">
         <span
           className={[
@@ -90,7 +77,10 @@ export const AxisControl = ({
             setAxisLabel={setAxisLabel}
           />
         </div>
-        <div className="w-full h-fit z-[-1000]" style={{ width, height }}></div>
+        <div
+          className="w-full h-fit"
+          style={{ width, height, top, left }}
+        ></div>
       </div>
       <div className="w-full h-[1px] -bottom-4 border-t-[1px] border-dashed border-gray-400 relative">
         <AddColButton

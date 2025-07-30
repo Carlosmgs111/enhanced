@@ -1,8 +1,18 @@
 import { MatrixEditor } from "./MatrixEditor";
 import { AxisControl } from "./AxisControl";
-// import { SideDashboard } from "./SideDashboard";
+import { BasicEditionTools } from "./BasicEditionTools";
+import { SaveMatrixTools } from "./SaveMatrixTools";
 
 export const MatrixEditorComposer = () => {
-  
-  return <MatrixEditor plugins={[AxisControl]}></MatrixEditor>;
+  return (
+    <MatrixEditor
+      matrixTools={[AxisControl]}
+      editorTools={[
+        BasicEditionTools,
+        SaveMatrixTools,
+        BasicEditionTools,
+        SaveMatrixTools,
+      ]}
+    ></MatrixEditor>
+  );
 };

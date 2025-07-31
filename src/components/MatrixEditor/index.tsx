@@ -1,10 +1,9 @@
 import { useMatrixEditor } from "./useMatrixEditor.ts";
-import { useMemo } from "react";
 import { SideDashboard } from "../SideDashboard/index.tsx";
-import { PixelDot } from "./PixelDot";
 
 export interface PluginProps {
-  matrixRef: React.RefObject<HTMLDivElement | null>;
+  gridRef: React.RefObject<HTMLDivElement | null>;
+  getGridHandling: () => any;
   rows: number;
   setRows: (rows: number) => void;
   cols: number;
@@ -13,7 +12,6 @@ export interface PluginProps {
   setMatrix: (matrix: any) => void;
   dragMode: "toggle" | "activate" | "deactivate";
   setDragMode: (mode: "toggle" | "activate" | "deactivate") => void;
-  isDragging: boolean;
   matrixIsLocked: boolean;
   setMatrixIsLocked: (locked: boolean) => void;
 }
@@ -39,78 +37,16 @@ export const MatrixEditor = ({
       editorToolsProps
   >[];
 }) => {
-  const {
-    matrix,
-    rows,
-    setRows,
-    cols,
-    setCols,
-    isDragging,
-    dragMode,
-    setDragMode,
-    matrixIsLocked,
-    setMatrixIsLocked,
-    matrixRef,
-    getCursorClass,
-    handleMouseDown,
-    handleMouseEnter,
-  } = useMatrixEditor();
+  const { getGridHandling }: any = useMatrixEditor();
+  const { gridRef } = getGridHandling();
 
   return (
     <div className="flex p-10 gap-8 ">
       {matrixTools?.map((Plugin, index) => (
-        <Plugin
-          key={index}
-          matrixRef={matrixRef}
-          rows={rows}
-          setRows={setRows}
-          cols={cols}
-          setCols={setCols}
-          dragMode={dragMode}
-          setDragMode={setDragMode}
-          matrix={matrix}
-          setMatrix={matrix.set}
-          matrixIsLocked={matrixIsLocked}
-          setMatrixIsLocked={setMatrixIsLocked}
-          isDragging={isDragging}
-        />
+        <Plugin key={index} {...getGridHandling()} />
       ))}
-      <div
-        ref={matrixRef}
-        className={`grid gap-[1px] mb-4 z-1000 `}
-        style={{
-          gridTemplateColumns: `repeat(${cols}, 1fr)`,
-          userSelect: "none", // ? Prevent text selection
-        }}
-      >
-        {matrix
-          .get()
-          .map((row, i) =>
-            row.map((cell, j) => (
-              <PixelDot
-                key={`${i}-${j}`}
-                i={i}
-                j={j}
-                cell={cell}
-                matrixIsLocked={matrixIsLocked}
-                isDragging={isDragging}
-                getCursorClass={getCursorClass}
-                handleMouseDown={handleMouseDown}
-                handleMouseEnter={handleMouseEnter}
-              ></PixelDot>
-            ))
-          )}
-      </div>
-      <SideDashboard
-        setMatrix={matrix.set}
-        matrix={matrix.get()}
-        matrixRef={matrixRef}
-        dragMode={dragMode}
-        setDragMode={setDragMode}
-        matrixIsLocked={matrixIsLocked}
-        setMatrixIsLocked={setMatrixIsLocked}
-        editorTools={editorTools}
-      />
+      <div ref={gridRef} className="grid gap-[0px] z-1000"></div>
+      <SideDashboard editorTools={editorTools} {...getGridHandling()} />
     </div>
   );
 };

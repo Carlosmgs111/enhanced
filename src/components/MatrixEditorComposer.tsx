@@ -7,12 +7,7 @@ export const MatrixEditorComposer = () => {
   return (
     <MatrixEditor
       matrixTools={[AxisControl]}
-      editorTools={[
-        BasicEditionTools,
-        SaveMatrixTools,
-        BasicEditionTools,
-        SaveMatrixTools,
-      ]}
+      editorTools={[BasicEditionTools, SaveMatrixTools]}
     ></MatrixEditor>
   );
 };

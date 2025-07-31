@@ -6,27 +6,27 @@ import { RemoveColButton } from "./RemoveColButton";
 import { LockAxisButton } from "./LockAxisButton";
 
 export const AxisControl = ({
-  matrixRef,
+  gridRef,
   rows,
   setRows,
   cols,
   setCols,
 }: {
-  matrixRef: React.RefObject<HTMLDivElement | null>;
+  gridRef: React.RefObject<HTMLDivElement | null>;
   rows: number;
   setRows: (rows: number) => void;
   cols: number;
   setCols: (cols: number) => void;
 }) => {
   const memoizedPosition = useMemo(() => {
-    const position = matrixRef?.current?.getBoundingClientRect() || {
+    const position = gridRef?.current?.getBoundingClientRect() || {
       width: 0,
       height: 0,
       top: 0,
       left: 0,
     };
     return position;
-  }, [matrixRef?.current?.getBoundingClientRect()]);
+  }, [gridRef?.current?.getBoundingClientRect()]);
   const { width, height, top, left } = memoizedPosition;
   const [axisIsLocked, setAxisIsLocked] = useState(false);
   const [axisLabel, setAxisLabel] = useState<{
@@ -35,10 +35,10 @@ export const AxisControl = ({
     axis: "rows" | "cols";
   } | null>(null);
 
-  if (!matrixRef?.current?.getBoundingClientRect()) return null;
+  // if (!gridRef?.current?.getBoundingClientRect()) return null;
 
   return (
-    <div className="inline-block w-fit h-fit absolute -z-100 ">
+    <div className="inline-block w-fit h-fit absolute z-[-1] ">
       <div className="relative">
         <span
           className={[
@@ -49,7 +49,7 @@ export const AxisControl = ({
         >
           <i className={axisLabel?.color}>{axisLabel?.content}</i>
         </span>
-        <div className="w-[1px] h-full border-l-[1px] border-dashed border-gray-400 absolute -left-4 top-0 flex items-center">
+        <div className="w-[1px] h-full border-l-[1px] border-dashed border-gray-400 absolute -left-4 top-0 flex items-center z-[1000]">
           <AddRowButton
             axisIsLocked={axisIsLocked}
             setRows={setRows}
@@ -82,7 +82,7 @@ export const AxisControl = ({
           style={{ width, height, top, left }}
         ></div>
       </div>
-      <div className="w-full h-[1px] -bottom-4 border-t-[1px] border-dashed border-gray-400 relative">
+      <div className="w-full h-[1px] -bottom-4 border-t-[1px] border-dashed border-gray-400 relative z-[1000]">
         <AddColButton
           axisIsLocked={axisIsLocked}
           setCols={setCols}

@@ -1,30 +1,27 @@
 import { useBasicEditionTools } from "./useBasicEditionTools";
 
 export const BasicEditionTools = ({
-  matrix,
-  setMatrix,
+  setPanelActionLabel,
   dragMode,
   setDragMode,
   matrixIsLocked,
   setMatrixIsLocked,
-  setPanelActionLabel,
+  getGridHandling,
 }: {
-  matrix: any;
-  setMatrix: any;
   dragMode: "toggle" | "activate" | "deactivate";
   setDragMode: (mode: "toggle" | "activate" | "deactivate") => void;
   matrixIsLocked: boolean;
-  setMatrixIsLocked: (matrixIsLocked: boolean) => void;
+  setMatrixIsLocked: (locked: boolean) => void;
   setPanelActionLabel: (
     panelActionLabel: {
       content: string;
       color: string;
     } | null
   ) => void;
+  getGridHandling: () => any;
 }) => {
   const { activateAll, deactivateAll } = useBasicEditionTools({
-    matrix,
-    setMatrix,
+    ...getGridHandling(),
   });
   return (
     <div className=" flex flex-col gap-2 items-center border-r border-gray-400 h-fit px-2 relative">

@@ -12,28 +12,23 @@ type editorToolsProps = {
     content: string;
     color: string;
   } | null;
+
 };
 export const SideDashboard = ({
   editorTools,
-  matrixRef,
   matrix,
   setMatrix,
-  dragMode,
-  setDragMode,
-  matrixIsLocked,
-  setMatrixIsLocked,
+  gridRef,
+  getGridHandling,
 }: {
   editorTools?: React.ComponentType<
     Omit<PluginProps, "rows" | "setRows" | "cols" | "setCols" | "isDragging"> &
       editorToolsProps
   >[];
-  matrixRef: React.RefObject<HTMLDivElement | null>;
-  matrix: number[][];
-  setMatrix: (matrix: number[][]) => void;
-  dragMode: "toggle" | "activate" | "deactivate";
-  setDragMode: (mode: "toggle" | "activate" | "deactivate") => void;
-  matrixIsLocked: boolean;
-  setMatrixIsLocked: (matrixIsLocked: boolean) => void;
+  matrix: any;
+  setMatrix: (matrix: any) => void;
+  getGridHandling: () => any;
+  gridRef: React.RefObject<HTMLDivElement | null>;
 }) => {
   const { panelActionLabel, setPanelActionLabel, toggleModeLabels } =
     useSideDashboard({ matrix, setMatrix });
@@ -42,7 +37,7 @@ export const SideDashboard = ({
   if (panelActionLabel) {
     [panelLabel, panelButton] = panelActionLabel.content.split(":");
   }
-  const { height } = matrixRef?.current?.getBoundingClientRect() || {
+  const { height } = gridRef?.current?.getBoundingClientRect() || {
     height: 0,
   };
   return (
@@ -71,16 +66,9 @@ export const SideDashboard = ({
       </div>
       {editorTools?.map((Tool, index) => (
         <Tool
-          key={index}
-          matrixRef={matrixRef}
-          dragMode={dragMode}
-          setDragMode={setDragMode}
-          matrix={matrix}
-          setMatrix={setMatrix}
-          matrixIsLocked={matrixIsLocked}
-          setMatrixIsLocked={setMatrixIsLocked}
           setPanelActionLabel={setPanelActionLabel}
           panelActionLabel={panelActionLabel}
+          {...getGridHandling()}
         />
       ))}
     </div>

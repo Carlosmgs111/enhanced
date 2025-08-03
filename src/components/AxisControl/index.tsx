@@ -1,102 +1,239 @@
-import { useState, useEffect, useMemo } from "react";
-import { AddRowButton } from "./AddRowButton";
-import { RemoveRowButton } from "./RemoveRowButton";
-import { AddColButton } from "./AddColButton";
-import { RemoveColButton } from "./RemoveColButton";
-import { LockAxisButton } from "./LockAxisButton";
+import { useEffect } from "react";
+import { AddColButton } from "../AxisControlComponents/RemoveColButton";
+import { AddRowButton } from "../AxisControlComponents/AddRowButton";
+import { RemoveColButton } from "../AxisControlComponents/AddColButton";
+import { RemoveRowButton } from "../AxisControlComponents/RemoveRowButton";
+import { LockAxisButton } from "../AxisControlComponents/LockAxisButton";
+import { useAxisController } from "./useAxisController";
 
-export const AxisControl = ({
-  gridRef,
-  rows,
+const AxisControlMiddleLeftPanel = ({
+  axisIsLocked,
   setRows,
+  rows,
+  setAxisLabel,
+}: {
+  axisIsLocked: boolean;
+  setRows: (rows: number) => void;
+  rows: number;
+  setAxisLabel: (
+    axisLabel: {
+      content: string;
+      color: string;
+      axis: "rows" | "cols";
+    } | null
+  ) => void;
+}) => {
+  console.log("AxisControllerMiddleLeftPanel", rows);
+  return (
+    <div className="w-fit h-full border-l-[1px] border-dashed border-gray-400 flex items-center relative">
+      <AddRowButton
+        axisIsLocked={axisIsLocked}
+        setRows={setRows}
+        rows={rows}
+        setAxisLabel={setAxisLabel}
+      />
+      <div className="transform -rotate-90 translate-x-[-24px] whitespace-nowrap w-0 h-0 flex flex-col items-center">
+        {rows} filas
+      </div>
+      <RemoveRowButton
+        axisIsLocked={axisIsLocked}
+        setRows={setRows}
+        rows={rows}
+        setAxisLabel={setAxisLabel}
+      />
+    </div>
+  );
+};
+
+const AxisControlBottomLeftPanel = ({
+  axisIsLocked,
+  setAxisIsLocked,
+  setAxisLabel,
+}: {
+  axisIsLocked: boolean;
+  setAxisIsLocked: (axisIsLocked: boolean) => void;
+  setAxisLabel: (
+    axisLabel: {
+      content: string;
+      color: string;
+      axis: "rows" | "cols";
+    } | null
+  ) => void;
+}) => {
+  return (
+    <div
+      className={
+        "w-8 h-8 border-l-[1px] border-b-[1px] border-gray-400 flex items-center justify-center"
+      }
+    >
+      <LockAxisButton
+        axisIsLocked={axisIsLocked}
+        setAxisIsLocked={setAxisIsLocked}
+        setAxisLabel={setAxisLabel}
+      />
+    </div>
+  );
+};
+
+const AxisControlBottomMiddlePanel = ({
+  axisIsLocked,
+  setAxisLabel,
   cols,
   setCols,
 }: {
-  gridRef: React.RefObject<HTMLDivElement | null>;
-  rows: number;
-  setRows: (rows: number) => void;
+  axisIsLocked: boolean;
+  setAxisLabel: (
+    axisLabel: {
+      content: string;
+      color: string;
+      axis: "rows" | "cols";
+    } | null
+  ) => void;
   cols: number;
   setCols: (cols: number) => void;
 }) => {
-  const memoizedPosition = useMemo(() => {
-    const position = gridRef?.current?.getBoundingClientRect() || {
-      width: 0,
-      height: 0,
-      top: 0,
-      left: 0,
-    };
-    return position;
-  }, [gridRef?.current?.getBoundingClientRect()]);
-  const { width, height, top, left } = memoizedPosition;
-  const [axisIsLocked, setAxisIsLocked] = useState(false);
-  const [axisLabel, setAxisLabel] = useState<{
-    content: string;
-    color: string;
-    axis: "rows" | "cols";
-  } | null>(null);
-
-  // if (!gridRef?.current?.getBoundingClientRect()) return null;
-
+  console.log("AxisControlBottomMiddlePanel", { cols });
   return (
-    <div className="inline-block w-fit h-fit absolute z-[-1] ">
-      <div className="relative">
-        <span
-          className={[
-            "absolute text-center left-0 w-full h-fit text-xs whitespace-nowrap overflow-hidden bg-gray-700 px-2",
-            axisLabel?.axis === "rows" ? "-top-4" : "-bottom-4",
-            axisLabel?.color,
-          ].join(" ")}
-        >
-          <i className={axisLabel?.color}>{axisLabel?.content}</i>
-        </span>
-        <div className="w-[1px] h-full border-l-[1px] border-dashed border-gray-400 absolute -left-4 top-0 flex items-center z-[1000]">
-          <AddRowButton
-            axisIsLocked={axisIsLocked}
-            setRows={setRows}
+    <div className="w-full h-[1px] -bottom-8 border-t-[1px] border-dashed border-gray-400 relative z-[1000]">
+      <AddColButton
+        axisIsLocked={axisIsLocked}
+        setCols={setCols}
+        cols={cols}
+        setAxisLabel={setAxisLabel}
+      />
+      <div className=" text-center">{cols} columnas</div>
+      <RemoveColButton
+        axisIsLocked={axisIsLocked}
+        setCols={setCols}
+        cols={cols}
+        setAxisLabel={setAxisLabel}
+      />
+    </div>
+  );
+};
+
+export const AxisControl = ({
+  setPanelActionLabel,
+  setPanels,
+  cols,
+  setCols,
+  rows,
+  setRows,
+}: {
+  setPanelActionLabel: (
+    panelActionLabel: {
+      content: string;
+      color: string;
+    } | null
+  ) => void;
+  setMiddleLeftPanel: (panel: React.ReactNode) => void;
+  setBottomLeftPanel: (panel: React.ReactNode) => void;
+  setBottomMiddlePanel: (panel: React.ReactNode) => void;
+  setPanels: (panels: any) => void;
+  cols: number;
+  setCols: (cols: number) => void;
+  rows: number;
+  setRows: (rows: number) => void;
+}) => {
+  const { activated, setActivated } = useAxisController();
+
+  useEffect(() => {
+    if (activated) {
+      setPanels({
+        middleLeft: (
+          <AxisControlMiddleLeftPanel
             rows={rows}
-            setAxisLabel={setAxisLabel}
-          />
-          <div className="transform -rotate-90 translate-x-[-24px] whitespace-nowrap w-0 h-0 flex flex-col items-center">
-            {rows} filas
-          </div>
-          <RemoveRowButton
-            axisIsLocked={axisIsLocked}
             setRows={setRows}
-            rows={rows}
-            setAxisLabel={setAxisLabel}
+            axisIsLocked={false}
+            setAxisLabel={setPanelActionLabel}
           />
-        </div>
-        <div
-          className={
-            "w-8 h-8 border-l-[1px] border-b-[1px] border-gray-400  absolute -left-11 -bottom-11 flex items-center justify-center"
+        ),
+        bottomLeft: (
+          <AxisControlBottomLeftPanel
+            axisIsLocked={false}
+            setAxisLabel={setPanelActionLabel}
+            setAxisIsLocked={setActivated}
+          />
+        ),
+        bottomMiddle: (
+          <AxisControlBottomMiddlePanel
+            cols={cols}
+            setCols={setCols}
+            axisIsLocked={false}
+            setAxisLabel={setPanelActionLabel}
+          />
+        ),
+      });
+    }
+    if (!activated) {
+      setPanels({
+        middleLeft: null,
+        bottomLeft: null,
+        bottomMiddle: null,
+      });
+    }
+  }, [activated, cols, rows]);
+  return (
+    <div className=" flex flex-col gap-2 items-center border-r border-gray-400 h-fit px-2 relative">
+      <button
+        onClick={() => {
+          if (activated) {
+            setActivated(false);
+            setPanels({
+              middleLeft: null,
+              bottomLeft: null,
+              bottomMiddle: null,
+            });
           }
-        >
-          <LockAxisButton
-            axisIsLocked={axisIsLocked}
-            setAxisIsLocked={setAxisIsLocked}
-            setAxisLabel={setAxisLabel}
-          />
-        </div>
-        <div
-          className="w-full h-fit"
-          style={{ width, height, top, left }}
-        ></div>
-      </div>
-      <div className="w-full h-[1px] -bottom-4 border-t-[1px] border-dashed border-gray-400 relative z-[1000]">
-        <AddColButton
-          axisIsLocked={axisIsLocked}
-          setCols={setCols}
-          cols={cols}
-          setAxisLabel={setAxisLabel}
-        />
-        <div className=" text-center">{cols} columnas</div>
-        <RemoveColButton
-          axisIsLocked={axisIsLocked}
-          setCols={setCols}
-          cols={cols}
-          setAxisLabel={setAxisLabel}
-        />
-      </div>
+          if (!activated) {
+            setActivated(true);
+            setPanels({
+              middleLeft: (
+                <AxisControlMiddleLeftPanel
+                  rows={rows}
+                  axisIsLocked={false}
+                  setAxisLabel={setPanelActionLabel}
+                  setRows={setRows}
+                />
+              ),
+              bottomLeft: (
+                <AxisControlBottomLeftPanel
+                  axisIsLocked={false}
+                  setAxisLabel={setPanelActionLabel}
+                  setAxisIsLocked={setActivated}
+                />
+              ),
+              bottomMiddle: (
+                <AxisControlBottomMiddlePanel
+                  cols={cols}
+                  axisIsLocked={false}
+                  setAxisLabel={setPanelActionLabel}
+                  setCols={setCols}
+                />
+              ),
+            });
+          }
+        }}
+        onMouseEnter={() =>
+          setPanelActionLabel({
+            content: "Activar control de ejes",
+            color: "text-blue-500",
+          })
+        }
+        onMouseLeave={() => setPanelActionLabel(null)}
+        className={`p-1 text-md font-medium transition-all cursor-pointer aspect-square w-8 h-8 text-gray-600 hover:bg-gray-200 outline-none active:bg-gray-200 ${
+          activated ? "bg-gray-600 text-yellow-500" : ""
+        }`}
+      >
+        ⇔
+      </button>
+      <button onClick={() => setCols(cols + 1)}>+</button>
+
+      <span
+        className={[
+          "absolute text-green-500 text-xs top-1/2 -right-[4px] w-0 h-0 items-center whitespace-nowrap text-md transition-all duration-200 ease-in-out",
+        ].join(" ")}
+      ></span>
     </div>
   );
 };

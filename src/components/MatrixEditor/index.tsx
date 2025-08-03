@@ -3,7 +3,7 @@ import { SideDashboard } from "../SideDashboard/index.tsx";
 
 export interface PluginProps {
   gridRef: React.RefObject<HTMLDivElement | null>;
-  getGridHandling: () => any;
+  gridHandling: any;
   rows: number;
   setRows: (rows: number) => void;
   cols: number;
@@ -14,6 +14,13 @@ export interface PluginProps {
   setDragMode: (mode: "toggle" | "activate" | "deactivate") => void;
   matrixIsLocked: boolean;
   setMatrixIsLocked: (locked: boolean) => void;
+  setMiddleLeftPanel: (panel: any) => void;
+  setBottomLeftPanel: (panel: React.ReactNode) => void;
+  setBottomMiddlePanel: (panel: React.ReactNode) => void;
+  setBottomRightPanel: (panel: React.ReactNode) => void;
+  setTopLeftPanel: (panel: React.ReactNode) => void;
+  setTopMiddlePanel: (panel: React.ReactNode) => void;
+  setTopRightPanel: (panel: React.ReactNode) => void;
 }
 type editorToolsProps = {
   setPanelActionLabel: (
@@ -25,7 +32,7 @@ type editorToolsProps = {
   panelActionLabel: {
     content: string;
     color: string;
-  } | null;
+  } | null; 
 };
 export const MatrixEditor = ({
   matrixTools,
@@ -37,16 +44,28 @@ export const MatrixEditor = ({
       editorToolsProps
   >[];
 }) => {
-  const { getGridHandling }: any = useMatrixEditor();
-  const { gridRef } = getGridHandling();
+  const { gridHandling, setPanels }: any = useMatrixEditor();
+  const { gridRef, panels } = gridHandling;
 
   return (
-    <div className="flex p-10 gap-8 ">
-      {matrixTools?.map((Plugin, index) => (
-        <Plugin key={index} {...getGridHandling()} />
-      ))}
-      <div ref={gridRef} className="grid gap-[0px] z-1000"></div>
-      <SideDashboard editorTools={editorTools} {...getGridHandling()} />
+    <div className="grid grid-cols-[repeat(3,auto)] grid-rows-[repeat(3,auto)] gap-4 ">
+      <div id="top-left"> {panels.topLeft}</div>
+      <div id="top-middle"> {panels.topMiddle}</div>
+      <div id="top-right"> {panels.topRight}</div>
+      <div id="middle-left">{panels.middleLeft}</div>
+      <div id="middle-middle" className="max-w-[800px] overflow-scroll">
+        <div ref={gridRef} className="grid gap-[0px] z-1000"></div>
+      </div>
+      <div id="middle-right">
+        <SideDashboard
+          editorTools={editorTools}
+          gridHandling={gridHandling}
+          setPanels={setPanels}
+        />
+      </div>
+      <div id="bottom-left"> {panels.bottomLeft}</div>
+      <div id="bottom-middle"> {panels.bottomMiddle}</div>
+      <div id="bottom-right"> {panels.bottomRight}</div>
     </div>
   );
 };

@@ -16,28 +16,22 @@ type editorToolsProps = {
 };
 export const SideDashboard = ({
   editorTools,
-  matrix,
-  setMatrix,
-  gridRef,
-  getGridHandling,
+  gridHandling,
+  setPanels,
 }: {
   editorTools?: React.ComponentType<
     Omit<PluginProps, "rows" | "setRows" | "cols" | "setCols" | "isDragging"> &
       editorToolsProps
   >[];
-  matrix: any;
-  setMatrix: (matrix: any) => void;
-  getGridHandling: () => any;
-  gridRef: React.RefObject<HTMLDivElement | null>;
+  gridHandling: any;
+  setPanels: (panels: any) => void;
 }) => {
-  const { panelActionLabel, setPanelActionLabel, toggleModeLabels } =
-    useSideDashboard({ matrix, setMatrix });
+  const { panelActionLabel, setPanelActionLabel } = useSideDashboard();
   let panelLabel = "";
-  let panelButton = "";
   if (panelActionLabel) {
-    [panelLabel, panelButton] = panelActionLabel.content.split(":");
+    [panelLabel] = panelActionLabel.content.split(":");
   }
-  const { height } = gridRef?.current?.getBoundingClientRect() || {
+  const { height } = gridHandling.gridRef?.current?.getBoundingClientRect() || {
     height: 0,
   };
   return (
@@ -66,9 +60,11 @@ export const SideDashboard = ({
       </div>
       {editorTools?.map((Tool, index) => (
         <Tool
+          key={index}
           setPanelActionLabel={setPanelActionLabel}
           panelActionLabel={panelActionLabel}
-          {...getGridHandling()}
+          {...gridHandling}
+          setPanels={setPanels}
         />
       ))}
     </div>

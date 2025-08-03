@@ -1,6 +1,6 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 
-export const useSideDashboard = ({ matrix, setMatrix }: any) => {
+export const useSideDashboard = () => {
   const [panelActionLabel, setPanelActionLabel] = useState<{
     content: string;
     color: string;

@@ -7,26 +7,32 @@ export const useBasicEditionTools = ({
   totalCells,
   cells,
   grid,
+  syncGridToMatrix,
 }: {
   totalCells: number;
   cells: any[];
   grid: any[];
+  syncGridToMatrix: () => void;
 }) => {
   const activateAll = useCallback(() => {
     console.log("activating all");
     for (let i = 0; i < totalCells; i++) {
-      grid[i] = 1;
-      cells[i].style.backgroundColor = ACTIVE_COLOR;
+      grid.fill(1);
+      cells[i].classList.add("bg-gray-700");
+      cells[i].classList.add("border-white");
     }
+    syncGridToMatrix();
   }, [grid, cells]);
 
 
   const deactivateAll = useCallback(() => {
     console.log("deactivating all");
     for (let i = 0; i < totalCells; i++) {
-      grid[i] = 0;
-      cells[i].style.backgroundColor = INACTIVE_COLOR;
+      grid.fill(0);
+      cells[i].classList.remove("bg-gray-700");
+      cells[i].classList.remove("border-white");
     }
+    syncGridToMatrix();
   }, [grid, cells]);
 
   return {

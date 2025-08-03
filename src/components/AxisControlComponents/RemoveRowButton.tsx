@@ -21,16 +21,16 @@ export const RemoveRowButton = ({
       onClick={() => {
         setRows(rows - 1);
       }}
-      onMouseEnter={() =>
-        setAxisLabel({
-          content: !axisIsLocked
-            ? "Eliminar una fila"
-            : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
-          color: axisIsLocked ? "text-red-500" : "text-yellow-500",
-          axis: "rows",
-        })
-      }
-      onMouseLeave={() => setAxisLabel(null)}
+      // onMouseEnter={() =>
+      //   setAxisLabel({
+      //     content: !axisIsLocked
+      //       ? "Eliminar una fila"
+      //       : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
+      //     color: axisIsLocked ? "text-red-500" : "text-yellow-500",
+      //     axis: "rows",
+      //   })
+      // }
+      // onMouseLeave={() => setAxisLabel(null)}
     >
       -
     </button>

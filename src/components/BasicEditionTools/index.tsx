@@ -6,7 +6,7 @@ export const BasicEditionTools = ({
   setDragMode,
   matrixIsLocked,
   setMatrixIsLocked,
-  getGridHandling,
+  gridHandling,
 }: {
   dragMode: "toggle" | "activate" | "deactivate";
   setDragMode: (mode: "toggle" | "activate" | "deactivate") => void;
@@ -18,10 +18,10 @@ export const BasicEditionTools = ({
       color: string;
     } | null
   ) => void;
-  getGridHandling: () => any;
+  gridHandling: any;
 }) => {
   const { activateAll, deactivateAll } = useBasicEditionTools({
-    ...getGridHandling(),
+    ...gridHandling,
   });
   return (
     <div className=" flex flex-col gap-2 items-center border-r border-gray-400 h-fit px-2 relative">

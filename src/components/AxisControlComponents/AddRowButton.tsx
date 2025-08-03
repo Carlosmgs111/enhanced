@@ -21,16 +21,16 @@ export const AddRowButton = ({
         onClick={() => {
           setRows(rows + 1);
         }}
-        onMouseEnter={() =>
-          setAxisLabel({
-            content: !axisIsLocked
-              ? "Agregar una fila"
-              : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
-            color: axisIsLocked ? "text-red-500" : "text-green-500",
-            axis: "rows",
-          })
-        }
-        onMouseLeave={() => setAxisLabel(null)}
+        // onMouseEnter={() =>
+        //   setAxisLabel({
+        //     content: !axisIsLocked
+        //       ? "Agregar una fila"
+        //       : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
+        //     color: axisIsLocked ? "text-red-500" : "text-green-500",
+        //     axis: "rows",
+        //   })
+        // }
+        // onMouseLeave={() => setAxisLabel(null)}
       >
         +
       </button>

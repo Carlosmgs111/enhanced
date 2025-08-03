@@ -21,16 +21,16 @@ export const AddColButton = ({
       onClick={() => {
         setCols(cols - 1);
       }}
-      onMouseEnter={() =>
-        setAxisLabel({
-          content: !axisIsLocked
-            ? "Eliminar una columna"
-            : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
-          color: axisIsLocked ? "text-red-500" : "text-yellow-500",
-          axis: "cols",
-        })
-      }
-      onMouseLeave={() => setAxisLabel(null)}
+      // onMouseEnter={() =>
+      //   setAxisLabel({
+      //     content: !axisIsLocked
+      //       ? "Eliminar una columna"
+      //       : "⚠ Control de ejes bloqueado: Desbloquear ⚠",
+      //     color: axisIsLocked ? "text-red-500" : "text-yellow-500",
+      //     axis: "cols",
+      //   })
+      // }
+      // onMouseLeave={() => setAxisLabel(null)}
     >
       -
     </button>

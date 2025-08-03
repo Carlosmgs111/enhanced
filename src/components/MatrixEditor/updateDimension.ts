@@ -146,7 +146,7 @@ export const updateDimensionsWithCentering = ({
 
   initializeGrid();
 };
-
+// ? --------------------------------------------------------
 // Versión con preservación inteligente y transición suave
 export const updateDimensionsSmooth = ({
   rows,
@@ -154,76 +154,54 @@ export const updateDimensionsSmooth = ({
   grid,
   prevRows,
   prevCols,
-  initializeGrid,
-  syncGridToMatrix,
+  recreateGridDOM,
 }: any) => {
   const newTotalCells = rows * cols;
   const currentGrid = grid.current;
   const currentTotalCells = currentGrid.length;
 
+  // Si no hay grid anterior, inicializar desde cero
   if (currentTotalCells === 0) {
     grid.current = new Uint8Array(newTotalCells);
     prevRows.current = rows;
     prevCols.current = cols;
-    initializeGrid();
+    recreateGridDOM();
     return;
   }
 
   const oldRows = prevRows.current;
   const oldCols = prevCols.current;
 
+  // Si las dimensiones no cambiaron, no hacer nada
   if (oldRows === rows && oldCols === cols) return;
 
+  // Crear nuevo grid (Uint8Array se inicializa con 0s por defecto)
   const newGrid = new Uint8Array(newTotalCells);
   const getIndex = (row: number, col: number, totalCols: number) =>
     row * totalCols + col;
 
-  // Determinar estrategia basada en el cambio
-  const rowDiff = rows - oldRows;
-  const colDiff = cols - oldCols;
-
-  let startRow = 0;
-  let startCol = 0;
-
-  // Si se están agregando filas/columnas, decidir dónde colocar el contenido existente
-  if (rowDiff > 0) {
-    // Agregar filas nuevas al final (comportamiento natural)
-    startRow = 0;
-  } else if (rowDiff < 0) {
-    // Eliminar filas desde arriba (mantener contenido inferior)
-    startRow = 0;
-  }
-
-  if (colDiff > 0) {
-    // Agregar columnas al final
-    startCol = 0;
-  } else if (colDiff < 0) {
-    // Eliminar columnas desde la derecha
-    startCol = 0;
-  }
-
-  // Copiar datos preservando tanto como sea posible
+  // Conservar todas las celdas que pueden ser copiadas
   const maxCopyRows = Math.min(oldRows, rows);
   const maxCopyCols = Math.min(oldCols, cols);
 
+  // Copiar SOLO el estado existente celda por celda
   for (let row = 0; row < maxCopyRows; row++) {
     for (let col = 0; col < maxCopyCols; col++) {
       const oldIndex = getIndex(row, col, oldCols);
-      const newIndex = getIndex(row + startRow, col + startCol, cols);
-
+      const newIndex = getIndex(row, col, cols);
+      
+      // Verificar límites de seguridad
       if (oldIndex < currentGrid.length && newIndex < newGrid.length) {
         newGrid[newIndex] = currentGrid[oldIndex];
       }
     }
   }
 
-  // Actualizar referencias
+  // Actualizar las referencias
   grid.current = newGrid;
   prevRows.current = rows;
   prevCols.current = cols;
 
-  // Sincronizar con nanostores si es necesario
-  syncGridToMatrix();
-
-  initializeGrid();
+  // Solo recrear DOM, manteniendo el estado preservado
+  recreateGridDOM();
 };

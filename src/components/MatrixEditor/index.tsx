@@ -14,14 +14,9 @@ export interface PluginProps {
   setDragMode: (mode: "toggle" | "activate" | "deactivate") => void;
   matrixIsLocked: boolean;
   setMatrixIsLocked: (locked: boolean) => void;
-  setMiddleLeftPanel: (panel: any) => void;
-  setBottomLeftPanel: (panel: React.ReactNode) => void;
-  setBottomMiddlePanel: (panel: React.ReactNode) => void;
-  setBottomRightPanel: (panel: React.ReactNode) => void;
-  setTopLeftPanel: (panel: React.ReactNode) => void;
-  setTopMiddlePanel: (panel: React.ReactNode) => void;
-  setTopRightPanel: (panel: React.ReactNode) => void;
+  setPanels: (panels: any) => void;
 }
+
 type editorToolsProps = {
   setPanelActionLabel: (
     panelActionLabel: {

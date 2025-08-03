@@ -9,19 +9,13 @@ import Corners from "./Corners.astro";
 </div>
 
 <script>
-  import { matrixToSVG} from "../lib/dot-grid-svg";
+  import { matrixToSVG } from "../lib/dot-grid-svg";
   import type { config } from "../lib/dot-grid-svg";
   import { matrix } from "../stores/matrixState";
-  
+
   document.addEventListener("astro:page-load", () => {
-    matrix.set(
-      Array(17)
-        .fill(null)
-        .map(() => Array(11).fill(0))
-    );
-    // Generar SVG con configuración personalizada
     const customOptions: config = {
-      pointRadius:10,
+      pointRadius: 10,
       pointColor: "#000",
       backgroundColor: "transparent",
       padding: 10,
@@ -39,10 +33,15 @@ import Corners from "./Corners.astro";
         container.id = `svg-container`;
         document.body.appendChild(container);
       }
-      container.innerHTML = matrixToSVG(newState, {
-        ...customOptions,
-        makeSelectable: true,
-      });
+      container.innerHTML = matrixToSVG(
+        newState.matrix,
+        newState.rows,
+        newState.cols,
+        {
+          ...customOptions,
+          makeSelectable: true,
+        }
+      );
     });
   });
 </script>

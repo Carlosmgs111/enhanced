@@ -13,7 +13,9 @@ export type config = {
 };
 
 export function matrixToSVG(
-  matrix: number[][],
+  data: number[],
+  rows: number,
+  cols: number,
   config: config = {
     pointRadius: 5,
     spacing: 25,
@@ -24,17 +26,17 @@ export function matrixToSVG(
     makeSelectable: true,
   }
 ) {
-  if (!matrix || !Array.isArray(matrix) || matrix.length === 0) {
-    throw new Error("La matriz debe ser un array bidimensional válido");
+  if (!data || !Array.isArray(data)) {
+    throw new Error("Los datos deben ser un array válido");
   }
 
-  const rows = matrix.length;
-  const cols = matrix[0].length;
+  if (rows <= 0 || cols <= 0) {
+    throw new Error("Las filas y columnas deben ser números positivos");
+  }
 
-  // Verificar que todas las filas tengan la misma longitud
-  if (!matrix.every((row) => Array.isArray(row) && row.length === cols)) {
+  if (data.length !== rows * cols) {
     throw new Error(
-      "Todas las filas de la matriz deben tener la misma longitud"
+      `El tamaño del array (${data.length}) no coincide con las dimensiones especificadas (${rows}x${cols} = ${rows * cols})`
     );
   }
 
@@ -63,10 +65,13 @@ export function matrixToSVG(
           >${config.character}</text>`);
   }
 
-  // Puntos basados en la matriz (EXACTAMENTE como el código original)
+  // Puntos basados en el Uint8Array (adaptado del código original)
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
-      if (matrix[row][col] === 1) {
+      // Convertir coordenadas 2D a índice 1D
+      const index = row * cols + col;
+      
+      if (data[index] === 1) {
         // Calcular posición del punto
         const x = config.padding + config.pointRadius + col * config.spacing;
         const y = config.padding + config.pointRadius + row * config.spacing;
@@ -103,4 +108,29 @@ export function matrixToSVG(
   }
 
   return `<div style="display: inline-block; overflow: visible; ${containerStyle}">${baseSvg}</div>`;
+}
+
+// Función auxiliar para convertir de array bidimensional a array unidimensional (opcional)
+export function matrixToFlatArray(matrix: number[][]): { data: number[], rows: number, cols: number } {
+  if (!matrix || !Array.isArray(matrix) || matrix.length === 0) {
+    throw new Error("La matriz debe ser un array bidimensional válido");
+  }
+
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+
+  if (!matrix.every((row) => Array.isArray(row) && row.length === cols)) {
+    throw new Error("Todas las filas de la matriz deben tener la misma longitud");
+  }
+
+  const data = new Array(rows * cols);
+  
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const index = row * cols + col;
+      data[index] = matrix[row][col] ? 1 : 0;
+    }
+  }
+
+  return { data, rows, cols };
 }

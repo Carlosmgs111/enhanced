@@ -23,7 +23,6 @@ const AxisControlMiddleLeftPanel = ({
     } | null
   ) => void;
 }) => {
-  console.log("AxisControllerMiddleLeftPanel", rows);
   return (
     <div className="w-fit h-full border-l-[1px] border-dashed border-gray-400 flex items-center relative">
       <AddRowButton
@@ -92,7 +91,6 @@ const AxisControlBottomMiddlePanel = ({
   cols: number;
   setCols: (cols: number) => void;
 }) => {
-  console.log("AxisControlBottomMiddlePanel", { cols });
   return (
     <div className="w-full h-[1px] -bottom-8 border-t-[1px] border-dashed border-gray-400 relative z-[1000]">
       <AddColButton
@@ -126,9 +124,6 @@ export const AxisControl = ({
       color: string;
     } | null
   ) => void;
-  setMiddleLeftPanel: (panel: React.ReactNode) => void;
-  setBottomLeftPanel: (panel: React.ReactNode) => void;
-  setBottomMiddlePanel: (panel: React.ReactNode) => void;
   setPanels: (panels: any) => void;
   cols: number;
   setCols: (cols: number) => void;
@@ -227,7 +222,6 @@ export const AxisControl = ({
       >
         ⇔
       </button>
-      <button onClick={() => setCols(cols + 1)}>+</button>
 
       <span
         className={[

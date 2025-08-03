@@ -12,7 +12,6 @@ type editorToolsProps = {
     content: string;
     color: string;
   } | null;
-
 };
 export const SideDashboard = ({
   editorTools,
@@ -63,7 +62,7 @@ export const SideDashboard = ({
           key={index}
           setPanelActionLabel={setPanelActionLabel}
           panelActionLabel={panelActionLabel}
-          {...gridHandling}
+          {...{ ...gridHandling, gridHandling }}
           setPanels={setPanels}
         />
       ))}

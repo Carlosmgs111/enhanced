@@ -8,13 +8,14 @@ const dottedFont = await fetch("http://localhost:3000/api/dotted-font").then(
 
 const catalog: any[] = [];
 
-Object.entries(dottedFont).forEach(([char, {glyphMatrix}]: any) => {
-  if (!glyphMatrix || !glyphMatrix[0]) {
+Object.entries(dottedFont).forEach(([char, {glyphMatrix, cols, rows}]: any) => {
+  console.log(char, glyphMatrix, cols, rows);
+  if (!glyphMatrix || !glyphMatrix.length) {
     return;
   }
   catalog.push({
     character: char,
-    svg: matrixToSVG(glyphMatrix, {
+    svg: matrixToSVG(glyphMatrix, rows, cols, {
       character: char,
       pointRadius: 8,
       pointColor: "#000",

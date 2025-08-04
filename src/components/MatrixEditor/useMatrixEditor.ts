@@ -153,7 +153,6 @@ export const useMatrixEditor = () => {
       grid,
       prevRows,
       prevCols,
-      recreateGridDOM, // Usar recreateGridDOM en lugar de initializeGrid
     });
     
     matrix.set({
@@ -161,6 +160,8 @@ export const useMatrixEditor = () => {
       rows: rows,
       matrix: Array.from(grid.current),
     });
+
+    recreateGridDOM();
   }, [rows, cols, recreateGridDOM]);
 
   // Inicialización inicial - SOLO una vez

@@ -154,7 +154,6 @@ export const updateDimensionsSmooth = ({
   grid,
   prevRows,
   prevCols,
-  recreateGridDOM,
 }: any) => {
   const newTotalCells = rows * cols;
   const currentGrid = grid.current;
@@ -165,7 +164,6 @@ export const updateDimensionsSmooth = ({
     grid.current = new Uint8Array(newTotalCells);
     prevRows.current = rows;
     prevCols.current = cols;
-    recreateGridDOM();
     return;
   }
 
@@ -197,11 +195,7 @@ export const updateDimensionsSmooth = ({
     }
   }
 
-  // Actualizar las referencias
   grid.current = newGrid;
   prevRows.current = rows;
   prevCols.current = cols;
-
-  // Solo recrear DOM, manteniendo el estado preservado
-  recreateGridDOM();
 };

@@ -1,4 +1,4 @@
-export const AddColButton = ({
+export const RemoveColButton = ({
   axisIsLocked,
   setCols,
   cols,

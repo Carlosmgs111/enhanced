@@ -31,6 +31,7 @@ export function matrixToSVG(
   }
 
   if (rows <= 0 || cols <= 0) {
+    console.log(rows, cols);
     throw new Error("Las filas y columnas deben ser números positivos");
   }
 

@@ -1,114 +1,8 @@
 import { useEffect } from "react";
-import { AddColButton } from "../AxisControlComponents/RemoveColButton";
-import { AddRowButton } from "../AxisControlComponents/AddRowButton";
-import { RemoveColButton } from "../AxisControlComponents/AddColButton";
-import { RemoveRowButton } from "../AxisControlComponents/RemoveRowButton";
-import { LockAxisButton } from "../AxisControlComponents/LockAxisButton";
 import { useAxisController } from "./useAxisController";
-
-const AxisControlMiddleLeftPanel = ({
-  axisIsLocked,
-  setRows,
-  rows,
-  setAxisLabel,
-}: {
-  axisIsLocked: boolean;
-  setRows: (rows: number) => void;
-  rows: number;
-  setAxisLabel: (
-    axisLabel: {
-      content: string;
-      color: string;
-      axis: "rows" | "cols";
-    } | null
-  ) => void;
-}) => {
-  return (
-    <div className="w-fit h-full border-l-[1px] border-dashed border-gray-400 flex items-center relative">
-      <AddRowButton
-        axisIsLocked={axisIsLocked}
-        setRows={setRows}
-        rows={rows}
-        setAxisLabel={setAxisLabel}
-      />
-      <div className="transform -rotate-90 translate-x-[-24px] whitespace-nowrap w-0 h-0 flex flex-col items-center">
-        {rows} filas
-      </div>
-      <RemoveRowButton
-        axisIsLocked={axisIsLocked}
-        setRows={setRows}
-        rows={rows}
-        setAxisLabel={setAxisLabel}
-      />
-    </div>
-  );
-};
-
-const AxisControlBottomLeftPanel = ({
-  axisIsLocked,
-  setAxisIsLocked,
-  setAxisLabel,
-}: {
-  axisIsLocked: boolean;
-  setAxisIsLocked: (axisIsLocked: boolean) => void;
-  setAxisLabel: (
-    axisLabel: {
-      content: string;
-      color: string;
-      axis: "rows" | "cols";
-    } | null
-  ) => void;
-}) => {
-  return (
-    <div
-      className={
-        "w-8 h-8 border-l-[1px] border-b-[1px] border-gray-400 flex items-center justify-center"
-      }
-    >
-      <LockAxisButton
-        axisIsLocked={axisIsLocked}
-        setAxisIsLocked={setAxisIsLocked}
-        setAxisLabel={setAxisLabel}
-      />
-    </div>
-  );
-};
-
-const AxisControlBottomMiddlePanel = ({
-  axisIsLocked,
-  setAxisLabel,
-  cols,
-  setCols,
-}: {
-  axisIsLocked: boolean;
-  setAxisLabel: (
-    axisLabel: {
-      content: string;
-      color: string;
-      axis: "rows" | "cols";
-    } | null
-  ) => void;
-  cols: number;
-  setCols: (cols: number) => void;
-}) => {
-  return (
-    <div className="w-full h-[1px] -bottom-8 border-t-[1px] border-dashed border-gray-400 relative z-[1000]">
-      <AddColButton
-        axisIsLocked={axisIsLocked}
-        setCols={setCols}
-        cols={cols}
-        setAxisLabel={setAxisLabel}
-      />
-      <div className=" text-center">{cols} columnas</div>
-      <RemoveColButton
-        axisIsLocked={axisIsLocked}
-        setCols={setCols}
-        cols={cols}
-        setAxisLabel={setAxisLabel}
-      />
-    </div>
-  );
-};
+import { MiddleLeftPanel } from "./MiddleLeftPanel";
+import { BottomLeftPanel } from "./BottomLeftPanel";
+import { BottomMiddlePanel } from "./BottomMiddlePanel";
 
 export const AxisControl = ({
   setPanelActionLabel,
@@ -136,7 +30,7 @@ export const AxisControl = ({
     if (activated) {
       setPanels({
         middleLeft: (
-          <AxisControlMiddleLeftPanel
+          <MiddleLeftPanel
             rows={rows}
             setRows={setRows}
             axisIsLocked={false}
@@ -144,14 +38,14 @@ export const AxisControl = ({
           />
         ),
         bottomLeft: (
-          <AxisControlBottomLeftPanel
+          <BottomLeftPanel
             axisIsLocked={false}
             setAxisLabel={setPanelActionLabel}
             setAxisIsLocked={setActivated}
           />
         ),
         bottomMiddle: (
-          <AxisControlBottomMiddlePanel
+          <BottomMiddlePanel
             cols={cols}
             setCols={setCols}
             axisIsLocked={false}
@@ -184,7 +78,7 @@ export const AxisControl = ({
             setActivated(true);
             setPanels({
               middleLeft: (
-                <AxisControlMiddleLeftPanel
+                <MiddleLeftPanel
                   rows={rows}
                   axisIsLocked={false}
                   setAxisLabel={setPanelActionLabel}
@@ -192,14 +86,14 @@ export const AxisControl = ({
                 />
               ),
               bottomLeft: (
-                <AxisControlBottomLeftPanel
+                <BottomLeftPanel
                   axisIsLocked={false}
                   setAxisLabel={setPanelActionLabel}
                   setAxisIsLocked={setActivated}
                 />
               ),
               bottomMiddle: (
-                <AxisControlBottomMiddlePanel
+                <BottomMiddlePanel
                   cols={cols}
                   axisIsLocked={false}
                   setAxisLabel={setPanelActionLabel}

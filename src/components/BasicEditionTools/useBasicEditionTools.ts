@@ -12,6 +12,7 @@ export const useBasicEditionTools = ({
   syncGridToMatrix: () => void;
   updateCell: (index: number, value: 0 | 1) => void;
 }) => {
+  
   const activateAll = useCallback(() => {
     console.log("activating all");
     for (let i = 0; i < totalCells; i++) {

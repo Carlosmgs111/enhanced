@@ -1,0 +1,11 @@
+---
+// src/pages/editor.astro
+import Layout from "../../layouts/Layout.astro";
+import KonvaEditor from "../../components/KonvaEditor";
+---
+
+<Layout>
+  <div style="width: 100vw; height: 90vh;">
+    <KonvaEditor client:only="react" />
+  </div>
+</Layout>

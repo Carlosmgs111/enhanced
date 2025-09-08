@@ -1,0 +1,14 @@
+---
+import { sc } from "../../lib/sc";
+const states: Record<string, string> = {
+  error: "border-red-900 text-red-900 bg-red-100",
+};
+const { state = "", placeholder = "Input de Texto" } = Astro.props;
+const inputStyle = sc(
+  "w-fit h-fit py-[12px] px-[24px] font-[400] text-[14px] border border-[1px] border-gray-200 h-[44px] bg-gray-100 duration-200 ease-in-out",
+  "focus:border-gray-900 focus:text-gray-900 focus:bg-white focus:outline-none",
+  states[state]
+);
+---
+
+<input class={inputStyle} placeholder={placeholder} type="text" />

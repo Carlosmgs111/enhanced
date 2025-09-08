@@ -1,0 +1,68 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { CheckBox } from "../../components/Atoms/CheckBox";
+import { Button } from "../../components/Atoms/Button";
+import Input from "../../components/Atoms/Input.astro";
+import { sc } from "../../lib/sc";
+import { ProjectCard } from "../../components/Molecules/ProjectCard";
+import { ReactIcon } from "../../components/Icons/ReactIcon";
+import { ProjectIndex } from "../../components/Organisms/ProjectIndex";
+
+const cardStyle = sc(
+  "relative block bg-squared-dotted-pattern bg-dotted-pattern w-[480px] aspect-[1.618/1] p-4",
+  // "hover:animate-headShake",
+  "hover:nth-child(1) border-t-blue-900"
+);
+
+const triangleBorderStyle = sc(
+  "group border border-[1px] border-transparent w-fit h-fit relative block",
+  // "hover:animate-headShake",
+  // "hover:border-gray-700",
+  "transition-all duration-200 ease-in-out"
+);
+
+const triangleStyle = sc(
+  "absolute opacity-0 top-0 right-0 w-0 h-0 border-t-[20px] border-l-[20px]",
+  "pointer-events-none border-t-gray-900 border-l-transparent z-[1000] transition-all duration-200 ease-in-out",
+  "group-hover:border-t-gray-700 group-hover:opacity-100"
+);
+---
+
+<Layout>
+  <div class="flex flex-col gap-4 p-8">
+    <div class={cardStyle}>
+      <p class="bg-white p-2 w-fit">Hola Mundo</p>
+      <Button variant="primary">Botón Primario</Button>
+      <Button variant="primary" ghost>Botón Secundario</Button>
+    </div>
+    <ProjectIndex client:load />
+
+    <div class={triangleBorderStyle}>
+      <div class={triangleStyle}></div>
+      <a class="h-full w-full px-4 py-2 block" href="https://www.google.com"
+        >Enlace</a
+      >
+    </div>
+
+    <div class="flex flex-col gap-0 p-8 h-fit w-fit relative">
+      <div
+        class={"absolute top-0 left-0 w-0 h-0" +
+          " after:absolute after:h-4 after:border-l-[4px] after:border-gray-900 after:translate-y-[-50%]" +
+          " before:absolute before:w-4 before:border-t-[4px] before:border-gray-900 before:translate-x-[-50%]"}
+      >
+      </div>
+      <p class="bg-white p-2 w-fit">Hola Mundo</p>
+    </div>
+
+    <!-- ? Suggestion by claude -->
+    <h3 class="text-[24px] font-bold">Sugerencias de Claude</h3>
+    <Button variant="primary" ghost>Botón Primario</Button>
+    <Button variant="secondary">Botón Secundario</Button>
+    <Input />
+    <div class="flex flex-col gap-2 w-fit">
+      <CheckBox checked>Checkbox</CheckBox>
+      <CheckBox>Checkbox</CheckBox>
+      <CheckBox>Checkbox</CheckBox>
+    </div>
+  </div>
+</Layout>

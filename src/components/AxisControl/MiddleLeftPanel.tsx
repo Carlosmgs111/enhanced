@@ -19,7 +19,7 @@ export const MiddleLeftPanel = ({
   ) => void;
 }) => {
   return (
-    <div className="w-fit h-full border-l-[1px] border-dashed border-gray-400 flex items-center relative">
+    <div className="w-fit h-full border-l-[1px] left-0 border-dashed border-gray-400 flex items-center relative">
       <AddRowButton
         axisIsLocked={axisIsLocked}
         setRows={setRows}

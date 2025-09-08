@@ -1,0 +1,493 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="max-w-4xl mx-auto space-y-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">
+      Cambiar Contenido con Checkbox
+    </h1>
+
+    <!-- Ejemplo 1: Texto simple -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">1. Cambio de Texto Simple</h2>
+      <div class="space-y-4">
+        <input type="checkbox" class="peer sr-only" id="toggle1" />
+        <label
+          for="toggle1"
+          class="cursor-pointer
+                        inline-block
+                        px-4 py-2
+                        bg-gray-200
+                        rounded
+                        peer-checked:bg-green-500
+                        peer-checked:text-white
+                        transition-all duration-200"
+        >
+          <span class="peer-checked:hidden">🔒 Bloqueado</span>
+          <span class="hidden peer-checked:block">🔓 Desbloqueado</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Ejemplo 2: Toggle de modo oscuro -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">2. Toggle Modo Oscuro</h2>
+      <input type="checkbox" class="peer sr-only" id="darkMode" />
+      <div
+        class="peer-checked:bg-gray-800 peer-checked:text-white bg-white text-gray-800 p-4 rounded-lg border transition-all duration-300"
+      >
+        <label
+          for="darkMode"
+          class="cursor-pointer flex items-center justify-between"
+        >
+          <div>
+            <span class="font-medium peer-checked:hidden">🌞 Modo Claro</span>
+            <span class="font-medium hidden peer-checked:block"
+              >🌙 Modo Oscuro</span
+            >
+            <p class="text-sm opacity-70 mt-1 peer-checked:hidden">
+              Interfaz brillante y clara
+            </p>
+            <p class="text-sm opacity-70 mt-1 hidden peer-checked:block">
+              Interfaz oscura para mejor descanso visual
+            </p>
+          </div>
+          <div
+            class="w-12 h-6
+                            bg-gray-300
+                            rounded-full
+                            relative
+                            peer-checked:bg-blue-500
+                            transition-colors duration-200"
+          >
+            <div
+              class="absolute
+                                top-1
+                                left-1
+                                w-4 h-4
+                                bg-white
+                                rounded-full
+                                transition-transform duration-200
+                                peer-checked:translate-x-6"
+            >
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Ejemplo 3: Mostrar/Ocultar contenido -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">3. Mostrar/Ocultar Contenido</h2>
+      <input type="checkbox" class="peer sr-only" id="showDetails" />
+      <label
+        for="showDetails"
+        class="cursor-pointer
+                    inline-flex items-center
+                    px-4 py-2
+                    bg-blue-500
+                    text-white
+                    rounded
+                    hover:bg-blue-600
+                    transition-colors duration-200"
+      >
+        <span class="peer-checked:hidden">➕ Mostrar detalles</span>
+        <span class="hidden peer-checked:inline">➖ Ocultar detalles</span>
+      </label>
+
+      <div
+        class="hidden
+                    peer-checked:block
+                    mt-4
+                    p-4
+                    bg-blue-50
+                    border-l-4
+                    border-blue-500
+                    rounded-r
+                    animate-fade-in"
+      >
+        <h3 class="font-semibold text-blue-800">Información Adicional</h3>
+        <p class="text-blue-700 mt-2">
+          Este contenido solo se muestra cuando el checkbox está marcado. Puedes
+          incluir cualquier tipo de contenido aquí: texto, imágenes,
+          formularios, etc.
+        </p>
+        <ul class="list-disc list-inside mt-2 text-blue-600">
+          <li>Elemento 1</li>
+          <li>Elemento 2</li>
+          <li>Elemento 3</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Ejemplo 4: Cambio de estado de tarjeta -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">4. Estado de Tarjeta</h2>
+      <input type="checkbox" class="peer sr-only" id="cardState" />
+      <div
+        class="border-2
+                    border-gray-200
+                    rounded-lg
+                    p-4
+                    peer-checked:border-green-500
+                    peer-checked:bg-green-50
+                    transition-all duration-300"
+      >
+        <label for="cardState" class="cursor-pointer block">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="font-semibold peer-checked:text-green-800">
+                <span class="peer-checked:hidden">📋 Tarea Pendiente</span>
+                <span class="hidden peer-checked:inline"
+                  >✅ Tarea Completada</span
+                >
+              </h3>
+              <p class="text-sm text-gray-600 peer-checked:text-green-600 mt-1">
+                <span class="peer-checked:hidden"
+                  >Haz clic para marcar como completada</span
+                >
+                <span class="hidden peer-checked:inline"
+                  >¡Excelente trabajo!</span
+                >
+              </p>
+            </div>
+            <div
+              class="w-6 h-6
+                                border-2
+                                border-gray-300
+                                rounded
+                                peer-checked:border-green-500
+                                peer-checked:bg-green-500
+                                flex items-center justify-center"
+            >
+              <svg
+                class="w-4 h-4 text-white opacity-0 peer-checked:opacity-100"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Ejemplo 5: Múltiples elementos -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">5. Control de Vista</h2>
+      <input type="checkbox" class="peer sr-only" id="viewMode" />
+      <label
+        for="viewMode"
+        class="cursor-pointer
+                    inline-flex items-center
+                    px-3 py-1
+                    bg-gray-200
+                    rounded-full
+                    peer-checked:bg-purple-500
+                    peer-checked:text-white
+                    transition-all duration-200"
+      >
+        <span class="peer-checked:hidden">📋 Vista Lista</span>
+        <span class="hidden peer-checked:inline">📱 Vista Tarjetas</span>
+      </label>
+
+      <!-- Vista Lista -->
+      <div class="peer-checked:hidden mt-4">
+        <div class="space-y-2">
+          <div class="flex items-center p-2 border-b">
+            <span class="font-medium">Producto 1</span>
+            <span class="ml-auto">$10</span>
+          </div>
+          <div class="flex items-center p-2 border-b">
+            <span class="font-medium">Producto 2</span>
+            <span class="ml-auto">$15</span>
+          </div>
+          <div class="flex items-center p-2 border-b">
+            <span class="font-medium">Producto 3</span>
+            <span class="ml-auto">$20</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vista Tarjetas -->
+      <div class="hidden peer-checked:block mt-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+            <h3 class="font-semibold text-purple-800">Producto 1</h3>
+            <p class="text-purple-600">$10</p>
+          </div>
+          <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+            <h3 class="font-semibold text-purple-800">Producto 2</h3>
+            <p class="text-purple-600">$15</p>
+          </div>
+          <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+            <h3 class="font-semibold text-purple-800">Producto 3</h3>
+            <p class="text-purple-600">$20</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Ejemplos de checkbox -->
+  <div class="max-w-2xl mx-auto space-y-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">
+      Estilos de Checkbox con Tailwind
+    </h1>
+
+    <!-- Checkbox básico -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Checkbox Básico</h2>
+      <label class="flex items-center space-x-3 cursor-pointer">
+        <input
+          type="checkbox"
+          class="w-5 h-5
+                text-blue-600
+                border-gray-300
+                rounded
+                focus:ring-blue-500
+                focus:ring-2
+                checked:bg-blue-600
+                checked:border-blue-600"
+        />
+        <span class="text-gray-700">Opción básica</span>
+      </label>
+    </div>
+
+    <!-- Checkbox personalizado -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Checkbox Personalizado</h2>
+      <label class="flex items-center space-x-3 cursor-pointer">
+        <input
+          type="checkbox"
+          class="w-6 h-6
+                text-green-600
+                bg-gray-100
+                border-gray-300
+                rounded-md
+                focus:ring-green-500
+                focus:ring-2
+                checked:bg-green-600
+                checked:border-green-600
+                hover:checked:bg-green-700
+                transition-colors duration-200"
+        />
+        <span class="text-gray-700 font-medium">Opción con hover</span>
+      </label>
+    </div>
+
+    <!-- Checkbox con diferentes colores -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Diferentes Colores</h2>
+      <div class="space-y-3">
+        <label class="flex items-center space-x-3 cursor-pointer">
+          <input
+            type="checkbox"
+            class="w-5 h-5
+                    text-red-600
+                    border-gray-300
+                    rounded
+                    focus:ring-red-500
+                    focus:ring-2
+                    checked:bg-red-600
+                    checked:border-red-600"
+          />
+          <span class="text-gray-700">Rojo</span>
+        </label>
+
+        <label class="flex items-center space-x-3 cursor-pointer">
+          <input
+            type="checkbox"
+            class="w-5 h-5
+                    text-purple-600
+                    border-gray-300
+                    rounded
+                    focus:ring-purple-500
+                    focus:ring-2
+                    checked:bg-purple-600
+                    checked:border-purple-600"
+          />
+          <span class="text-gray-700">Púrpura</span>
+        </label>
+
+        <label class="flex items-center space-x-3 cursor-pointer">
+          <input
+            type="checkbox"
+            class="w-5 h-5
+                    text-orange-600
+                    border-gray-300
+                    rounded
+                    focus:ring-orange-500
+                    focus:ring-2
+                    checked:bg-orange-600
+                    checked:border-orange-600"
+          />
+          <span class="text-gray-700">Naranja</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Checkbox estilo toggle/switch -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Estilo Toggle</h2>
+      <label class="flex items-center space-x-3 cursor-pointer">
+        <input type="checkbox" class="sr-only peer" id="toggle" />
+        <div
+          class="relative w-11 h-6
+                bg-gray-200
+                peer-focus:outline-none
+                peer-focus:ring-4
+                peer-focus:ring-blue-300
+                rounded-full
+                peer
+                peer-checked:after:translate-x-full
+                peer-checked:after:border-white
+                after:content-['']
+                after:absolute
+                after:top-[2px]
+                after:left-[2px]
+                after:bg-white
+                after:border-gray-300
+                after:border
+                after:rounded-full
+                after:h-5
+                after:w-5
+                after:transition-all
+                peer-checked:bg-blue-600"
+        >
+        </div>
+        <span class="text-gray-700">Activar notificaciones</span>
+      </label>
+    </div>
+
+    <!-- Checkbox con ícono personalizado -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Con Ícono Personalizado</h2>
+      <label class="flex items-center space-x-3 cursor-pointer">
+        <div class="relative">
+          <input type="checkbox" class="sr-only peer" />
+          <div
+            class="w-6 h-6
+                    bg-white
+                    border-2
+                    border-gray-300
+                    rounded
+                    peer-checked:bg-green-500
+                    peer-checked:border-green-500
+                    peer-focus:ring-2
+                    peer-focus:ring-green-200
+                    flex items-center justify-center
+                    transition-all duration-200"
+          >
+            <svg
+              class="w-4 h-4 text-white opacity-0 peer-checked:opacity-100 transition-opacity"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </div>
+        <span class="text-gray-700">Tarea completada</span>
+      </label>
+    </div>
+
+    <!-- Lista de tareas interactiva -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Lista de Tareas</h2>
+      <div class="space-y-3">
+        <label
+          class="flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-gray-50"
+        >
+          <input
+            type="checkbox"
+            class="w-5 h-5
+                    text-indigo-600
+                    border-gray-300
+                    rounded
+                    focus:ring-indigo-500
+                    focus:ring-2
+                    checked:bg-indigo-600
+                    checked:border-indigo-600"
+          />
+          <span class="text-gray-700">Revisar documentación</span>
+        </label>
+
+        <label
+          class="flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-gray-50"
+        >
+          <input
+            type="checkbox"
+            class="w-5 h-5
+                    text-indigo-600
+                    border-gray-300
+                    rounded
+                    focus:ring-indigo-500
+                    focus:ring-2
+                    checked:bg-indigo-600
+                    checked:border-indigo-600"
+            checked
+          />
+          <span class="text-gray-700 line-through">Implementar estilos</span>
+        </label>
+
+        <label
+          class="flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-gray-50"
+        >
+          <input
+            type="checkbox"
+            class="w-5 h-5
+                    text-indigo-600
+                    border-gray-300
+                    rounded
+                    focus:ring-indigo-500
+                    focus:ring-2
+                    checked:bg-indigo-600
+                    checked:border-indigo-600"
+          />
+          <span class="text-gray-700">Hacer testing</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Agregar funcionalidad para tachar texto cuando se marca
+  document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+    checkbox.addEventListener("change", function (this: HTMLInputElement) {
+      const span = this.parentElement?.querySelector("span");
+      if (span && !span.classList.contains("font-semibold")) {
+        if (this.checked) {
+          span.classList.add("line-through", "text-gray-500");
+        } else {
+          span.classList.remove("line-through", "text-gray-500");
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+</style>

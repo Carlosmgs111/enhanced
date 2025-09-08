@@ -20,28 +20,70 @@ module.exports = {
       },
       animation: {
         headShake: "headShake 0.5s ease-in-out",
+        "starfield-pulse": "starfield-pulse .3s ease-in-out",
+        flash: "flash .3s ease-in-out",
       },
       keyframes: {
+        "starfield-pulse": {
+          "0%": {
+            "border-color": "#00ff88",
+            "text-shadow": "0 0 10px #00ff88",
+          },
+          "50%": {
+            "border-color": "#66ffaa",
+            "text-shadow": "0 0 20px #66ffaa",
+          },
+          "100%": {
+            "border-color": "#00ff88",
+            "text-shadow": "0 0 15px #00ff88",
+          },
+        },
+        flash: {
+          "0%, 50%, 100%": {
+            opacity: 1,
+          },
+          "25%, 75%": {
+            opacity: 0,
+          },
+        },
         headShake: {
           "0%": {
             transform: "translateX(0)",
           },
           "6.5%": {
-            transform: "translateX(-3px) rotateY(-9deg)",
+            transform: "translateX(-5px) rotateY(-9deg)",
           },
           "18.5%": {
-            transform: "translateX(2px) rotateY(7deg)",
+            transform: "translateX(5px) rotateY(7deg)",
           },
           "31.5%": {
-            transform: "translateX(-1px) rotateY(-5deg)",
+            transform: "translateX(-3px) rotateY(-5deg)",
           },
           "43.5%": {
-            transform: "translateX(1px) rotateY(3deg)",
+            transform: "translateX(3px) rotateY(3deg)",
           },
           "50%": {
             transform: "translateX(0)",
           },
         },
+      },
+      backgroundImage: {
+        "dotted-pattern": `radial-gradient(circle 2px at top left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 50%)`,
+        "squared-dotted-pattern": `linear-gradient(90deg, #fff 50%, transparent 50%), linear-gradient(#fff 50%, transparent 50%);`,
+        blueprint:
+          "linear-gradient(rgba(224,224,224,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(224,224,224,0.3) 1px, transparent 1px);",
+      },
+      backgroundSize: {
+        "dotted-pattern": "11px 11px",
+        "squared-dotted-pattern": "2px 2px",
+      },
+      backgroundPosition: {
+        "dotted-pattern": "0 0, 2px 2px",
+        "squared-dotted-pattern": "0 0, 2px 2px",
+      },
+      backgroundColor: {
+        "dotted-pattern": "#000",
+        "squared-dotted-pattern": "#000",
       },
     },
   },

@@ -1,0 +1,328 @@
+<div class="max-w-4xl mx-auto space-y-8">
+  <h1 class="text-3xl font-bold text-center mb-8">
+    Modificar SVG según Estado del Contenedor
+  </h1>
+
+  <!-- Card con hover -->
+  <div
+    class="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 cursor-pointer"
+  >
+    <div class="flex items-center space-x-4">
+      <div class="flex-shrink-0">
+        <svg
+          class="w-12 h-12 text-blue-500 group-hover:text-blue-700 group-hover:scale-110 transition-all duration-300"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+      </div>
+      <div>
+        <h3
+          class="text-lg font-semibold text-gray-900 group-hover:text-blue-700 transition-colors"
+        >
+          Hover Card
+        </h3>
+        <p class="text-gray-600">
+          El SVG cambia de color y escala al hacer hover
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botones con diferentes estados -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <button
+      class="group bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg transition-colors focus:ring-2 focus:ring-green-300"
+    >
+      <div class="flex items-center justify-center space-x-2">
+        <svg
+          class="w-5 h-5 group-hover:rotate-180 group-focus:scale-125 transition-all duration-300"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <span>Success</span>
+      </div>
+    </button>
+
+    <button
+      class="group bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-lg transition-colors focus:ring-2 focus:ring-yellow-300"
+    >
+      <div class="flex items-center justify-center space-x-2">
+        <svg
+          class="w-5 h-5 group-hover:animate-bounce group-focus:animate-pulse"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <span>Warning</span>
+      </div>
+    </button>
+
+    <button
+      class="group bg-red-500 hover:bg-red-600 text-white px-4 py-3 rounded-lg transition-colors focus:ring-2 focus:ring-red-300"
+    >
+      <div class="flex items-center justify-center space-x-2">
+        <svg
+          class="w-5 h-5 group-hover:animate-spin group-focus:text-red-200 transition-colors"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <span>Error</span>
+      </div>
+    </button>
+  </div>
+
+  <!-- Estados personalizados con data attributes -->
+  <div class="space-y-4">
+    <h2 class="text-xl font-semibold">Estados Personalizados</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Estado Online/Offline -->
+      <div
+        class="group bg-white p-4 rounded-lg shadow"
+        data-status="online"
+        onclick="toggleStatus(this)"
+      >
+        <div class="flex items-center space-x-3">
+          <svg
+            class="w-6 h-6 text-green-500 group-data-[status=online]:text-green-600 group-data-[status=offline]:text-red-500 transition-colors"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd"></path>
+          </svg>
+          <span
+            class="font-medium group-data-[status=online]:text-green-700 group-data-[status=offline]:text-red-700 transition-colors"
+          >
+            Status: <span class="status-text">Online</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Estado Loading -->
+      <div
+        class="group bg-white p-4 rounded-lg shadow"
+        data-loading="false"
+        onclick="toggleLoading(this)"
+      >
+        <div class="flex items-center space-x-3">
+          <svg
+            class="w-6 h-6 text-blue-500 group-data-[loading=true]:animate-spin transition-all"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            ></path>
+          </svg>
+          <span class="font-medium">
+            <span class="loading-text">Click to Load</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navegación con estados activos -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-semibold mb-4">Navegación con Estados</h2>
+    <nav class="flex space-x-4">
+      <a
+        href="#"
+        class="group flex items-center space-x-2 px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
+        data-active="true"
+        onclick="setActive(this)"
+      >
+        <svg
+          class="w-5 h-5 group-data-[active=true]:text-blue-600 group-hover:scale-110 transition-all"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L9 5.414V17a1 1 0 102 0V5.414l5.293 5.293a1 1 0 001.414-1.414l-7-7z"
+          ></path>
+        </svg>
+        <span class="group-data-[active=true]:font-semibold">Inicio</span>
+      </a>
+
+      <a
+        href="#"
+        class="group flex items-center space-x-2 px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
+        data-active="false"
+        onclick="setActive(this)"
+      >
+        <svg
+          class="w-5 h-5 group-data-[active=true]:text-blue-600 group-hover:scale-110 transition-all"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <span class="group-data-[active=true]:font-semibold">Productos</span>
+      </a>
+
+      <a
+        href="#"
+        class="group flex items-center space-x-2 px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
+        data-active="false"
+        onclick="setActive(this)"
+      >
+        <svg
+          class="w-5 h-5 group-data-[active=true]:text-blue-600 group-hover:scale-110 transition-all"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <span class="group-data-[active=true]:font-semibold">Contacto</span>
+      </a>
+    </nav>
+  </div>
+</div>
+
+<div class="flex flex-col gap-4">
+  <!-- Contenedor principal -->
+  <div class="flex items-center gap-4">
+    <!-- Icono React -->
+    <div
+      class="group/react p-1 bg-gray-50 border border-gray-900 transition-all duration-150 ease-in-out hover:bg-gray-900 w-fit h-fit"
+    >
+      <div
+        class="w-6 h-6 bg-blue-500 group-hover/react:bg-gray-50 transition-all duration-150 ease-in-out rounded-full flex items-center justify-center text-white group-hover/react:text-gray-900 text-xs font-bold"
+      >
+        R
+      </div>
+    </div>
+
+    <!-- Icono TypeScript -->
+    <div
+      class="group/typescript p-1 bg-gray-50 border border-gray-900 transition-all duration-150 ease-in-out hover:bg-gray-900 w-fit h-fit"
+    >
+      <div
+        class="w-6 h-6 bg-blue-600 group-hover/typescript:bg-gray-50 transition-all duration-150 ease-in-out rounded flex items-center justify-center text-white group-hover/typescript:text-gray-900 text-xs font-bold"
+      >
+        TS
+      </div>
+    </div>
+
+    <!-- Contenedor de labels -->
+    <div class="flex items-center gap-2">
+      <span
+        class="group-hover/react:opacity-100 opacity-0 transition-opacity duration-150 ease-in-out"
+      >
+        React
+      </span>
+      <span
+        class="group-hover/typescript:opacity-100 opacity-0 transition-opacity duration-150 ease-in-out"
+      >
+        TypeScript
+      </span>
+    </div>
+  </div>
+
+  <!-- Alternativa con estructura más clara -->
+  <div class="mt-8">
+    <h3 class="text-lg font-semibold mb-4">
+      Alternativa con mejor estructura:
+    </h3>
+    <div class="flex gap-6">
+      <!-- React container -->
+      <div class="group/react flex items-center gap-2">
+        <div
+          class="p-1 bg-gray-50 border border-gray-900 transition-all duration-150 ease-in-out group-hover/react:bg-gray-900 w-fit h-fit"
+        >
+          <div
+            class="w-6 h-6 bg-blue-500 group-hover/react:bg-gray-50 transition-all duration-150 ease-in-out rounded-full flex items-center justify-center text-white group-hover/react:text-gray-900 text-xs font-bold"
+          >
+            R
+          </div>
+        </div>
+        <span
+          class="group-hover/react:opacity-100 opacity-0 transition-opacity duration-150 ease-in-out"
+        >
+          React
+        </span>
+      </div>
+
+      <!-- TypeScript container -->
+      <div class="group/typescript flex items-center gap-2">
+        <div
+          class="p-1 bg-gray-50 border border-gray-900 transition-all duration-150 ease-in-out group-hover/typescript:bg-gray-900 w-fit h-fit"
+        >
+          <div
+            class="w-6 h-6 bg-blue-600 group-hover/typescript:bg-gray-50 transition-all duration-150 ease-in-out rounded flex items-center justify-center text-white group-hover/typescript:text-gray-900 text-xs font-bold"
+          >
+            TS
+          </div>
+        </div>
+        <span
+          class="group-hover/typescript:opacity-100 opacity-0 transition-opacity duration-150 ease-in-out"
+        >
+          TypeScript
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleStatus(element) {
+    const currentStatus = element.getAttribute("data-status");
+    const newStatus = currentStatus === "online" ? "offline" : "online";
+    element.setAttribute("data-status", newStatus);
+
+    const statusText = element.querySelector(".status-text");
+    statusText.textContent =
+      newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+  }
+
+  function toggleLoading(element) {
+    const isLoading = element.getAttribute("data-loading") === "true";
+    element.setAttribute("data-loading", !isLoading);
+
+    const loadingText = element.querySelector(".loading-text");
+    loadingText.textContent = !isLoading ? "Loading..." : "Click to Load";
+  }
+
+  function setActive(element) {
+    // Remover active de todos los elementos
+    const navItems = element.parentNode.querySelectorAll("a");
+    navItems.forEach((item) => item.setAttribute("data-active", "false"));
+
+    // Activar el elemento clickeado
+    element.setAttribute("data-active", "true");
+  }
+</script>

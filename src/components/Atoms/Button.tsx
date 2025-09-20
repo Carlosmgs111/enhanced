@@ -21,9 +21,9 @@ export const Button = ({
 }) => {
   const variants: Record<string, string> = {
     primary:
-      "hover:bg-gray-900 hover:text-white text-gray-900 border-gray-900 bg-gray-50",
+      "hover:bg-gray-900 hover:text-white text-gray-900 border-gray-300 bg-gray-50",
     secondary: sc(
-      "hover:bg-gray-100 hover:text-gray-900 hover:border-gray-900",
+      "hover:bg-gray-100 hover:text-gray-900 hover:border-gray-300",
       "text-gray-700 border-gray-400 font-[400] bg-gray-50"
     ),
   };

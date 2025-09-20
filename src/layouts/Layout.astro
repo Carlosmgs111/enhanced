@@ -12,21 +12,44 @@ console.log(path);
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <title>nan⏻</title>
     <ClientRouter />
   </head>
-  <body class="w-full h-fit">
-    <ul class="list-disc list-inside p-8">
-      <li><a class="underline" href="/">main</a></li>
-      <li><a class="underline" href="/UI-design/dot-grid">Grid Editor</a></li>
-      <li>
-        <a class="underline" href="/UI-design/konva">Konva</a>
-      </li>
-      <li>
-        <a class="underline" href="/UI-design/components">Componentes</a>
-      </li>
-    </ul>
-    <slot />
+  <body class="w-screen h-screen flex flex-row">
+    <nav>
+      nan<i class="text-[14px] not-italic">⏻</i>
+      <ul class="list-disc list-inside p-8">
+        <li><a class="underline" href="/">main</a></li>
+        <li><a class="underline" href="/UI-design/dot-grid">Grid Editor</a></li>
+        <li>
+          <a class="underline" href="/UI-design/konva">Konva</a>
+        </li>
+        <li>
+          <a class="underline" href="/UI-design/components">Componentes</a>
+        </li>
+        <li>
+          <a class="underline" href="/UI-design/masonry">Masonry</a>
+        </li>
+        <li>
+          <a class="underline" href="/projects">Proyectos</a>
+        </li>
+      </ul>
+    </nav>
+    <main
+      class="w-full h-screen overflow-scroll flex flex-row scroll-y-none scrollbar-hidden"
+    >
+      <section class="w-full h-full">
+        <slot />
+      </section>
+      <section
+        class="sticky top-0 inline-block flex items-center justify-center"
+      >
+        <label
+          class="text-[120px] [writing-mode:vertical-lr] [text-orientation:mixed] whitespace-nowrap"
+          >::PROYECTOS</label
+        >
+      </section>
+    </main>
   </body>
 </html>
 

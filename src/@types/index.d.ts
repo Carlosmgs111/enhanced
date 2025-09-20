@@ -10,6 +10,7 @@ declare module "fast-deep-equal";
 declare module "flatted";
 declare module "uuid";
 declare module "mogo";
+declare module "github-api";
 interface FilePickerAcceptType {
   description?: string;
   accept: Record<string, string[]>;

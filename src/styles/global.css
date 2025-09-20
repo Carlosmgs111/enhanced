@@ -7,3 +7,17 @@
   color: #000;
   font-weight: 300;
 }
+@layer utilities {
+  /* Para Chrome, Safari y Opera */
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+  /* Para Firefox */
+  .scrollbar-hidden {
+    scrollbar-width: none;
+  }
+  /* Para IE y Edge */
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+  }
+}

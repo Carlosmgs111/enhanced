@@ -72,10 +72,12 @@ module.exports = {
         "squared-dotted-pattern": `linear-gradient(90deg, #fff 50%, transparent 50%), linear-gradient(#fff 50%, transparent 50%);`,
         blueprint:
           "linear-gradient(rgba(224,224,224,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(224,224,224,0.3) 1px, transparent 1px);",
+        "grid-pattern": `linear-gradient(rgba(224,224,224,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(224,224,224,0.3) 1px, transparent 1px);`,
       },
       backgroundSize: {
         "dotted-pattern": "11px 11px",
         "squared-dotted-pattern": "2px 2px",
+        "grid-pattern": "18px 18px",
       },
       backgroundPosition: {
         "dotted-pattern": "0 0, 2px 2px",

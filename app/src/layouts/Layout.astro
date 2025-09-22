@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
+import { Navbar } from "../components/Molecules/Navbar";
 const path = Astro.url.pathname;
 console.log(path);
 ---
@@ -15,26 +16,8 @@ console.log(path);
     <title>nan⏻</title>
     <ClientRouter />
   </head>
-  <body class="w-screen h-screen flex flex-row">
-    <nav>
-      nan<i class="text-[14px] not-italic">⏻</i>
-      <ul class="list-disc list-inside p-8">
-        <li><a class="underline" href="/">main</a></li>
-        <li><a class="underline" href="/UI-design/dot-grid">Grid Editor</a></li>
-        <li>
-          <a class="underline" href="/UI-design/konva">Konva</a>
-        </li>
-        <li>
-          <a class="underline" href="/UI-design/components">Componentes</a>
-        </li>
-        <li>
-          <a class="underline" href="/UI-design/masonry">Masonry</a>
-        </li>
-        <li>
-          <a class="underline" href="/projects">Proyectos</a>
-        </li>
-      </ul>
-    </nav>
+  <body class="w-screen h-screen flex flex-row border-r-[1px]">
+    <Navbar />
     <main
       class="w-full h-screen overflow-scroll flex flex-row scroll-y-none scrollbar-hidden"
     >

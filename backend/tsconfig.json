@@ -1,0 +1,35 @@
+{
+  "exclude": [
+    "**/*.e2e.ts",
+    "**/*fake.ts",
+    "**/*test.ts",
+    "**/*stub.ts"
+  ],
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "@core-contracts/*": [
+        "./src/modules/RAG/@core-contracts/*"
+      ]
+    },
+    "target": "es6",
+    "module": "commonjs",
+    "lib": [
+      "ES2021"
+    ],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.json"
+  ]
+}

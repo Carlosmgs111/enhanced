@@ -1,0 +1,38 @@
+{
+  "name": "nano.backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "pnpm copy && tsc-watch --onSuccess \"node dist/index.js --env-file=.env\"",
+    "dev:ubuntu": "rsync -av --include='*/' --exclude='*.ts' ./src/  ./dist && tsc-watch --onSuccess \"node dist/index.js DEV\" ",
+    "dev": "pnpm copy && tsc-watch --onSuccess \"node dist/index.js --env-file=.env\" ",
+    "test": "jest",
+    "copy": "robocopy cp/rsync ./src ./dist /S /E /s /nfl /ndl /xf *.ts /e | echo 'copied successfully!'",
+    "test:e2e": "jest --config ./src/testing/e2e/jest-e2e.json --detectOpenHandles"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ai-sdk/groq": "^1.2.9",
+    "@ai-sdk/mistral": "^1.2.8",
+    "@chroma-core/default-embed": "^0.1.8",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "ai": "^4.3.19",
+    "chromadb": "^3.0.9",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.3",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "copyfiles": "^2.4.1",
+    "pnpm": "^10.13.1",
+    "tsc-watch": "^7.1.1",
+    "typescript": "^5.8.3"
+  }
+}
